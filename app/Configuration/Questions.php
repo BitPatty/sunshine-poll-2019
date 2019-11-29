@@ -5,36 +5,47 @@ namespace App\Configuration;
 class Questions
 {
 
-  public const QUESTION_LIST = [
-    self::AFF_CATEGORIES,
-    self::ALLOW_MULTIPLE
-  ];
-
-  public const POLL_DESCRIPTION = '<b>Voting system</b>: To be able to vote you need a <a href="https://speedrun.com"
-        target="_blank" rel="noreferrer">speedrun.com</a> account. Votes from people with runs on the Super Mario Sunshine
-        main or category extension leaderboards are automatically verified. All other votes will go through a process of
-        manual verification.';
-
-  /*
-   *
-   * MAIN POLL
-
-  public const QUESTION_LIST = [
-    self::HIDE_TIMINGS,
-    self::TIMING_METHOD_A,
-    self::TIMING_METHOD_B,
-    self::TIMING_METHOD_C,
-    self::TIMING_METHOD_D,
-    self::TIMING_METHOD_E,
-    self::COMMENT
-  ];
-
-  public const POLL_DESCRIPTION = '<b>Voting system</b>: Everyone will be voting on whether or not they agree
-      that a timing method should be allowed on the leaderboard, as well as specificites contained in that, 
-      should one or more of the timing methods reach over 50%, the method with the highest approval rating will 
-      be implemented alongside file select on the leaderboard. In the event that timing method C or B wins, and 
-      other method also receives over 50%, adding both of them will be considered.';
-  */
+  public static function getPoll($id)
+  {
+    switch ($id) {
+      case 'pre_poll':
+        return [
+          'question_list' => [
+            self::AFF_CATEGORIES,
+            self::ALLOW_MULTIPLE
+          ],
+          'description' => '<b>Voting system</b>: To be able to vote you need a <a href="https://speedrun.com"
+                   target="_blank" rel="noreferrer">speedrun.com</a> account. Votes from people with runs on the Super Mario Sunshine
+                   main or category extension leaderboards are automatically verified. All other votes will go through a process of
+                   manual verification.',
+          'flag' => 'has_voted_pp',
+          'from' => new \DateTime('2019-11-29 00:00:00', new \DateTimeZone('UTC')),
+          'to' => new \DateTime('2019-12-30 00:00:00', new \DateTimeZone('UTC'))
+        ];
+      case 'main_poll':
+        return [
+          'question_list' => [
+            self::HIDE_TIMINGS,
+            self::TIMING_METHOD_A,
+            self::TIMING_METHOD_B,
+            self::TIMING_METHOD_C,
+            self::TIMING_METHOD_D,
+            self::TIMING_METHOD_E,
+            self::COMMENT
+          ],
+          'description' => '<b>Voting system</b>: Everyone will be voting on whether or not they agree
+                   that a timing method should be allowed on the leaderboard, as well as specificites contained in that, 
+                   should one or more of the timing methods reach over 50%, the method with the highest approval rating will 
+                   be implemented alongside file select on the leaderboard. In the event that timing method C or B wins, and 
+                   other method also receives over 50%, adding both of them will be considered.',
+          'flag' => 'has_voted',
+          'from' => new \DateTime('2019-11-29 00:00:00', new \DateTimeZone('UTC')),
+          'to' => new \DateTime('2019-12-30 00:00:00', new \DateTimeZone('UTC'))
+        ];
+      default:
+        return null;
+    }
+  }
 
   private const AFF_CATEGORIES = [
     'id' => 'v_aff_categories',

@@ -9,13 +9,13 @@
     class="mb-5"
   >
     <p>
-      {!! \App\Configuration\Questions::POLL_DESCRIPTION !!}
+      {!! \App\Configuration\Questions::getPoll($poll_id)['description'] !!}
     </p>
   </div>
 
   <form
-    action="/"
-    method="post"
+    action={{ '/' . $poll_id }}
+      method="post"
   >
     @isset($errorMessages)
       @foreach($errorMessages as $message)
@@ -105,7 +105,7 @@
     </div>
 
 
-    @foreach(\App\Configuration\Questions::QUESTION_LIST as $question)
+    @foreach(\App\Configuration\Questions::getPoll($poll_id)['question_list'] as $question)
 
       @if($question['type'] === 'select')
 

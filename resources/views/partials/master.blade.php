@@ -66,6 +66,13 @@
       >
         @yield('subtitle')
       </p>
+
+      <div
+        class="alert alert-danger"
+        role="alert"
+      >
+        <b>THIS POLL IS NOT LIVE YET - VOTES WILL BE RESET!</b>
+      </div>
     </div>
   </div>
 </header>
