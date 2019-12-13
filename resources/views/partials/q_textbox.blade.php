@@ -14,8 +14,8 @@
     aria-describedby="{{$question['id']}}_help"
     rows="3"
   >
-    {!! isset($selectedValue) && isset($selectedValue[$question['id']]) ?
-       htmlspecialchars($selectedValue[$question['id']], ENT_COMPAT | ENT_HTML401 | ENT_QUOTES) : ""
+    {!! isset($selectedValue) ?
+       htmlspecialchars($selectedValue, ENT_COMPAT | ENT_HTML401 | ENT_QUOTES) : ""
     !!}
   </textarea>
   <small

@@ -5,13 +5,13 @@
 
 @section('content')
 
+  @if(!isset($missingRun) && !isset($errorMessages))
   <div
     class="mb-5"
   >
-    <p>
       {!! \App\Configuration\Questions::getPoll($poll_id)['description'] !!}
-    </p>
   </div>
+  @endif
 
   <hr>
 
