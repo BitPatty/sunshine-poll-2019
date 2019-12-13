@@ -13,7 +13,10 @@
     </p>
   </div>
 
+  <hr>
+
   <form
+    class="mt-5"
     action={{ '/' . $poll_id }}
       method="post"
   >
@@ -67,7 +70,7 @@
               : "(no video)"
               !!}"
           />
-          <small id=" custom_run_url_help" class="form-text text-muted">Provide an URL to one of your runs/SRL
+          <small id=" custom_run_url_help" class="form-text text-muted">Provide a URL to one of your runs/SRL
             races or skip this step by clicking 'Submit'.
           </small>
         </div>
@@ -98,7 +101,7 @@
          !!}"
       />
 
-      <small id="src_token_help" class="form-text text-muted">The token is used to verify your speedrun.com
+      <small id="src_token_help" class="form-text text-muted">The token is required to verify your speedrun.com
         account. You can find your token <a href="https://www.speedrun.com/api/auth" target="_blank"
                                             rel="noreferrer">here</a>.
       </small>

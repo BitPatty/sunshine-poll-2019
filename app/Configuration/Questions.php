@@ -9,6 +9,7 @@ class Questions
   {
     switch ($id) {
       case 'pre_poll':
+        /* Apparently not needed anymore
         return [
           'question_list' => [
             self::AFF_CATEGORIES,
@@ -22,6 +23,7 @@ class Questions
           'from' => new \DateTime('2019-11-29 00:00:00', new \DateTimeZone('UTC')),
           'to' => new \DateTime('2019-12-30 00:00:00', new \DateTimeZone('UTC'))
         ];
+        */
       case 'main_poll':
         return [
           'question_list' => [
@@ -34,10 +36,13 @@ class Questions
             self::COMMENT
           ],
           'description' => '<b>Voting system</b>: Everyone will be voting on whether or not they agree
-                   that a timing method should be allowed on the leaderboard, as well as specificites contained in that, 
-                   should one or more of the timing methods reach over 50%, the method with the highest approval rating will 
-                   be implemented alongside file select on the leaderboard. In the event that timing method C or B wins, and 
-                   other method also receives over 50%, adding both of them will be considered.',
+                   that a timing method should be allowed on the leaderboard, as well as specificites contained in that.
+                   (Note: File Select will always be allowed on the board, regardless of the poll results.)
+                   <br><br>To be able to vote you need a <a href="https://speedrun.com" target="_blank" rel="noreferrer">speedrun.com</a>
+                   account. Votes from people with runs on the Super Mario Sunshine main or category extension leaderboards are automatically verified,
+                   while all other votes will go through a process of manual verification.
+                   <br><br>The different timing methods will be seperated by variables on the leaderboard:
+                   <img src="/img/lb_preview.png" class="img-fluid mx-auto d-block mt-5" alt="Leaderboard preview">',
           'flag' => 'has_voted',
           'from' => new \DateTime('2019-11-29 00:00:00', new \DateTimeZone('UTC')),
           'to' => new \DateTime('2019-12-30 00:00:00', new \DateTimeZone('UTC'))
@@ -144,9 +149,10 @@ class Questions
       ]
     ],
     'default' => 'Indifferent',
-    'description' => 'Timing starts on closing Peach’s textbox. The file used is a premade file saved immediately 
-        after talking to peach on the airstrip. The first cutscene is skipped. Around a minute shorter than file 
-        select.<br><br>Sample: <a href="https://www.youtube.com/watch?v=-lML1_C1mfg" target="_blank" rel="noreferrer">Youtube</a>',
+    'description' => 'Time starts on closing peach\'s textbox (first input). This is 1 minute and 13 seconds shorter than a file select run. 
+        Should this timing method gain over 50% support, all runs on sms leaderboards that use file select would be converted to this timing 
+        (ex: The current any% world record, 1:14:18, would become a 1:13:05. All runs in all main categories would follow suit.)
+        <br><br>Sample: <a href="https://www.youtube.com/watch?v=j5_G15R5Uxo" target="_blank" rel="noreferrer">Youtube</a>',
     'validation_error' => 'The option chosen for "Timing Method A" is invalid'
   ];
 

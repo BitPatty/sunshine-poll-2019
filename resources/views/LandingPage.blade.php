@@ -8,9 +8,11 @@
     class="p-1 text-center container"
   >
     <div>
+      <!--
       <div class="mb-5">
         <h3><a href="/pre_poll">Pre-Poll</a></h3>
       </div>
+      -->
 
       <div>
         <h3><a href="/main_poll">Main Poll</a></h3>
