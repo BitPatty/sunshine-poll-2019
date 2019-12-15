@@ -16,41 +16,36 @@ class VoteController extends Controller
   {
   }
 
-  public function landing() {
-    return response(view('LandingPage'), 200);
-  }
-
-  public function index($id)
+  public function index()
   {
-    $poll = Questions::getPoll($id);
+    $poll = Questions::getPoll();
 
     if (!isset($poll))
       return response(view('PollNotFound'), 400);
 
-    if ($this->isPollClosed($id))
+    if ($this->isPollClosed())
       return response(view('PollClosed'), 200);
 
-    return view('Home', ['poll_id' => $id]);
+    return view('Home');
   }
 
-  public function create(Request $request, $id)
+  public function create(Request $request)
   {
-    $poll = Questions::getPoll($id);
+    $poll = Questions::getPoll();
 
     if (!isset($poll))
       return response(view('PollNotFound'), 400);
 
-    if ($this->isPollClosed($id))
+    if ($this->isPollClosed())
       return response(view('PollClosed'), 400);
 
-    $validator = Validator::make($request->post(), $this->buildValidators($id));
-    $params = $this->parseParams($request, $id);
+    $validator = Validator::make($request->post(), $this->buildValidators());
+    $params = $this->parseParams($request);
 
     if ($validator->fails()) {
       return response(
         view('Home', [
-          'poll_id' => $id,
-          'errorMessages' => $this->parseValidationErrors($validator, $id),
+          'errorMessages' => $this->parseValidationErrors($validator),
           'selectedValues' => $params
         ]), 412);
     }
@@ -59,7 +54,6 @@ class VoteController extends Controller
 
     if ($src_profile == null) {
       return response(view('Home', [
-        'poll_id' => $id,
         'errorMessages' => [Messages::FAIL_RETRIEVE_PROFILE],
         'selectedValues' => $params
       ]), 400);
@@ -74,7 +68,6 @@ class VoteController extends Controller
         } else {
           $infoMessages = [Messages::MISSING_RUN_UPDATE];
           return response(view('Home', [
-            'poll_id' => $id,
             'infoMessages' => $infoMessages,
             'missingRun' => true,
             'selectedValues' => $params
@@ -87,7 +80,6 @@ class VoteController extends Controller
         $params['custom_run_url'] = $dbVote->custom_run_url;
         $infoMessages = [Messages::MISSING_RUN_INIT];
         return response(view('Home', [
-          'poll_id' => $id,
           'infoMessages' => $infoMessages,
           'missingRun' => true,
           'selectedValues' => $params
@@ -96,7 +88,7 @@ class VoteController extends Controller
 
       $dbVote->src_id = $src_profile['id'];
       $dbVote->src_name = $src_profile['names']['international'];
-      $this->mapVoteModel($dbVote, $params, $id);
+      $this->mapVoteModel($dbVote, $params);
       $dbVote->save();
 
       $listItems = [
@@ -118,7 +110,7 @@ class VoteController extends Controller
         ];
       }
 
-      return view('Success', ['listItems' => $listItems, 'poll_id' => $id]);
+      return view('Success', ['listItems' => $listItems]);
     }
   }
 
@@ -143,48 +135,44 @@ class VoteController extends Controller
 
   /**
    * Checks whether a poll is closed
-   * @param $poll_id
    * @return bool
    */
-  private function isPollClosed($poll_id)
+  private function isPollClosed()
   {
     $now = new \DateTime();
     $now->setTimezone(new \DateTimeZone('UTC'));
 
-    $poll = Questions::getPoll($poll_id);
+    $poll = Questions::getPoll();
 
     return ($now < $poll['from'] || $now > $poll['to']);
   }
 
   /**
-   *
    * @param Vote $model
    * @param array $params
-   * @param string $poll_id
    */
-  private function mapVoteModel(Vote $model, Array $params, string $poll_id)
+  private function mapVoteModel(Vote $model, Array $params)
   {
-    foreach (Questions::getPoll($poll_id)['question_list'] as $question) {
+    foreach (Questions::getPoll()['question_list'] as $question) {
       $model[$question['id']] = $params[$question['id']];
     }
 
     $model->custom_run_url = $params['custom_run_url'] ?? $model->custom_run_url;
-    $model[Questions::getPoll($poll_id)['flag']] = true;
+    $model[Questions::getPoll()['flag']] = true;
   }
 
   /**
    * Parse POST params
    * @param Request $request
-   * @param string $poll_id
    */
-  private function parseParams(Request $request, string $poll_id)
+  private function parseParams(Request $request)
   {
     $params = [
       'src_token' => trim($request->post('src_token') ?? ''),
       'custom_run_url' => $request->post('custom_run_url'),
     ];
 
-    foreach (Questions::getPoll($poll_id)['question_list'] as $question) {
+    foreach (Questions::getPoll()['question_list'] as $question) {
       $params[$question['id']] = trim($request->post($question['id']) ?? '-');
     }
 
@@ -195,9 +183,8 @@ class VoteController extends Controller
   /**
    * Parse validation errors into a human readable form
    * @param Validator $validator
-   * @param $poll_id
    */
-  private function parseValidationErrors($validator, $poll_id)
+  private function parseValidationErrors($validator)
   {
     $errorMessages = [];
 
@@ -207,7 +194,7 @@ class VoteController extends Controller
       array_push($errorMessages, 'Invalid SRC ID supplied');
     }
 
-    foreach (Questions::getPoll($poll_id)['question_list'] as $question) {
+    foreach (Questions::getPoll()['question_list'] as $question) {
       if ($messages->has($question['id'])) {
         if (isset($question['validation_error'])) {
           array_push($errorMessages, $question['validation_error']);
@@ -228,16 +215,15 @@ class VoteController extends Controller
 
   /**
    * Build validators based on the questions
-   * @param string $poll_id
    */
-  private function buildValidators(string $poll_id)
+  private function buildValidators()
   {
     $validators = [
       'src_token' => 'required|regex:/^[a-zA-Z0-9 ]+$/u|min:1|max:64',
       'custom_run_url' => 'max:100'
     ];
 
-    foreach (Questions::getPoll($poll_id)['question_list'] as $question) {
+    foreach (Questions::getPoll()['question_list'] as $question) {
 
       $validator = [];
 

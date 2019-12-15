@@ -20,7 +20,7 @@
     </div>
 
     <div class="alert alert-info text-center mt-5" role="alert">
-      Changed your mind? Fill in <a href="/{{$poll_id}}">the form</a> again to update your vote.
+      Changed your mind? Fill in <a href="/">the form</a> again to update your vote.
     </div>
   </div>
 @endsection

@@ -6,18 +6,18 @@
 @section('content')
 
   @if(!isset($missingRun) && !isset($errorMessages))
-  <div
-    class="mb-5"
-  >
-      {!! \App\Configuration\Questions::getPoll($poll_id)['description'] !!}
-  </div>
+    <div
+      class="mb-5"
+    >
+      {!! \App\Configuration\Questions::getPoll()['description'] !!}
+    </div>
   @endif
 
   <hr>
 
   <form
     class="mt-5"
-    action={{ '/' . $poll_id }}
+    action='/'
       method="post"
   >
     @isset($errorMessages)
@@ -108,7 +108,7 @@
     </div>
 
 
-    @foreach(\App\Configuration\Questions::getPoll($poll_id)['question_list'] as $question)
+    @foreach(\App\Configuration\Questions::getPoll()['question_list'] as $question)
 
       @if($question['type'] === 'select')
 
