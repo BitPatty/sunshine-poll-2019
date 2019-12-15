@@ -30,7 +30,7 @@ class Questions
   }
 
   private const TIMING_METHOD_A = [
-    'id' => 'v_option_b',
+    'id' => 'v_option_a',
     'title' => 'Timing Method A',
     'type' => 'select',
     'required' => true,
@@ -57,7 +57,7 @@ class Questions
   ];
 
   private const TIMING_METHOD_B = [
-    'id' => 'v_option_c',
+    'id' => 'v_option_b',
     'title' => 'Timing Method B',
     'type' => 'select',
     'required' => true,
@@ -87,7 +87,7 @@ class Questions
   ];
 
   private const TIMING_METHOD_C = [
-    'id' => 'v_option_d',
+    'id' => 'v_option_c',
     'title' => 'Timing Method C',
     'type' => 'select',
     'required' => true,
@@ -114,7 +114,7 @@ class Questions
   ];
 
   private const TIMING_METHOD_D = [
-    'id' => 'v_option_e',
+    'id' => 'v_option_d',
     'title' => 'Timing Method D',
     'type' => 'select',
     'required' => true,

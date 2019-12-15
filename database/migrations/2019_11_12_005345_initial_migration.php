@@ -24,7 +24,6 @@ class InitialMigration extends Migration
       $table->enum('v_option_c', ['Indifferent', 'Yes', 'No'])->default('Indifferent');
       $table->enum('v_option_d', ['Indifferent', 'Yes', 'No'])->default('Indifferent');
       $table->enum('v_option_e', ['Indifferent', 'Yes', 'No'])->default('Indifferent');
-      $table->enum('v_allow_multiple', ['Only B and C', 'Yes', 'No', 'Indifferent'])->default('Indifferent');
       $table->text('comment')->nullable();
       $table->timestamps();
     });
