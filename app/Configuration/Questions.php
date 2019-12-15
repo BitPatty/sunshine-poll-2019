@@ -133,9 +133,11 @@ class Questions
       ]
     ],
     'default' => 'Indifferent',
-    'description' => 'A save file that has been pre-modified and loaded onto your memory card, having set all cutscene flags to watched, 
-        allowing every cutscene to be skipped. Mashing through a cutscene adds its length to the final time to preserve in-game skips.
-        Around 7 minutes faster than file select.',
+    'description' => 'A save file that has been pre-modified and loaded onto your 
+      memory card, having set all cutscene flags to watched (Exceptions: pinna 1 
+      and pinna unlock cutscenes), allowing them to be skipped. Runs that use this 
+      timing method would start with 7:07.08 on the timer to account for skipped 
+      cutscenes.',
     'validation_error' => 'The option chosen for "Timing Method E" is invalid'
   ];
 
