@@ -19,7 +19,7 @@ class Questions
            that a timing method should be allowed on the leaderboard, as well as specificites contained in that.
            Any and all timing methods that receive over 50% approval will be allowed on the leaderboard.
            These changes will apply to all categories that currently start from a new file (Any%, 120 Shines, etc.).
-           (Note: File Select will always be allowed on the board, regardless of the poll results.)
+           <br>(Note: File Select will always be allowed on the board, regardless of the poll results.)
            <br><br>To be able to vote you need a <a href="https://speedrun.com" target="_blank" rel="noreferrer">speedrun.com</a>
            account. Votes from people with runs on the Super Mario Sunshine main or category extension leaderboards are automatically verified,
            while all other votes will go through a process of manual verification.
