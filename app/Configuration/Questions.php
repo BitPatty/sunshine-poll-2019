@@ -16,14 +16,14 @@ class Questions
         self::COMMENT
       ],
       'description' => '<b>Voting system</b>: Everyone will be voting on whether or not they agree
-           that a timing method should be allowed on the leaderboard, as well as specificites contained in that.
+           that a timing method should be allowed on the leaderboard, as well as specificities contained in that.
            Any and all timing methods that receive over 50% approval will be allowed on the leaderboard.
            These changes will apply to all categories that currently start from a new file (Any%, 120 Shines, etc.).
            <br>Note: File Select will always be allowed on the board, regardless of the poll results.
            <br><br>To be able to vote you need a <a href="https://speedrun.com" target="_blank" rel="noreferrer">speedrun.com</a>
            account. Votes from people with runs on the Super Mario Sunshine main or category extension leaderboards are automatically verified,
            while all other votes will go through a process of manual verification.
-           <br><br>The different timing methods will be seperated by variables on the leaderboard:
+           <br><br>The different timing methods will be separated by variables on the leaderboard:
            <img src="/img/lb_preview.png" class="img-fluid mx-auto d-block mt-5" alt="Leaderboard preview">',
       'flag' => 'has_voted',
       'from' => new \DateTime('2019-11-29 00:00:00', new \DateTimeZone('UTC')),
