@@ -17,6 +17,8 @@ class Questions
       ],
       'description' => '<b>Voting system</b>: Everyone will be voting on whether or not they agree
            that a timing method should be allowed on the leaderboard, as well as specificites contained in that.
+           Any and all timing methods that receive over 50% approval will be allowed on the leaderboard.
+           These changes will apply to all categories that currently start from a new file (Any%, 120 Shines, etc.).
            (Note: File Select will always be allowed on the board, regardless of the poll results.)
            <br><br>To be able to vote you need a <a href="https://speedrun.com" target="_blank" rel="noreferrer">speedrun.com</a>
            account. Votes from people with runs on the Super Mario Sunshine main or category extension leaderboards are automatically verified,
@@ -49,8 +51,8 @@ class Questions
       ]
     ],
     'default' => 'Indifferent',
-    'description' => 'The file used is a premade file saved after having watched the Fludd cutscene on airstrip.
-          When loading this file, the plane crash cutscene and the fludd cutscene may be skipped. Runs that use 
+    'description' => 'The file used is a premade file saved after having watched the FLUDD cutscene on airstrip.
+          When loading this file, the plane crash cutscene and the FLUDD cutscene may be skipped. Runs that use 
           this timing method will start with 2:30.20 on the timer to account for skipped cutscenes.
           <br><br>Sample: <a href="https://www.youtube.com/watch?v=cLhh4d4wZbw" target="_blank" rel="noreferrer">Youtube</a>',
     'validation_error' => 'The option chosen for "Timing Method B" is invalid'
@@ -76,9 +78,9 @@ class Questions
       ]
     ],
     'default' => 'Indifferent',
-    'description' => 'Two premade files are used. One is saved after having watched the Fludd cutscene on airstrip.
+    'description' => 'Two premade files are used. One is saved after having watched the FLUDD cutscene on airstrip.
         The second is saved after being loaded into delfino plaza. The player would load the first file, skip the 
-        plane crash and fludd cutscenes, complete airstrip, reset (save prompt must appear before the screen fades 
+        plane crash and FLUDD cutscenes, complete airstrip, reset (save prompt must appear before the screen fades 
         to black to be considered valid), then load the 2nd file and continue the run in delfino, skipping the court 
         and officer\'s speech cutscenes. Runs that use this timing method will start with 5:32.60 on the timer to 
         account for skipped cutscenes.
@@ -107,7 +109,7 @@ class Questions
     ],
     'default' => 'Indifferent',
     'description' => 'A save file that has been pre-modified and loaded onto your memory card, having set the intro cutscene, 
-        fludd cutscene, courtroom cutscene  and officer\'s speech cutscene to watched, allowing them to be skipped. Runs that 
+        FLUDD cutscene, courtroom cutscene  and officer\'s speech cutscene to watched, allowing them to be skipped. Runs that 
         use this timing method would start with 5:39.96 on the timer to account for skipped cutscenes.
         <br><br>Sample: <a href="https://www.youtube.com/watch?v=iXBclBuSyew" target="_blank" rel="noreferrer">Youtube</a>',
     'validation_error' => 'The option chosen for "Timing Method D" is invalid'
