@@ -66,7 +66,7 @@ class VoteController extends Controller
 
           $dbVote = new Vote();
         } else {
-          $infoMessages = [Messages::MISSING_RUN_UPDATE];
+          $infoMessages = [Messages::MISSING_RUN_INIT];
           return response(view('Home', [
             'infoMessages' => $infoMessages,
             'missingRun' => true,
@@ -78,7 +78,7 @@ class VoteController extends Controller
         && $request->post('submitting_custom_run') !== '1') {
 
         $params['custom_run_url'] = $dbVote->custom_run_url;
-        $infoMessages = [Messages::MISSING_RUN_INIT];
+        $infoMessages = [Messages::MISSING_RUN_UPDATE];
         return response(view('Home', [
           'infoMessages' => $infoMessages,
           'missingRun' => true,
