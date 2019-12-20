@@ -9,6 +9,7 @@ class Questions
   {
     return [
       'question_list' => [
+        self::HIDE_TIMINGS,
         self::TIMING_METHOD_A,
         self::TIMING_METHOD_B,
         self::TIMING_METHOD_C,
@@ -30,6 +31,30 @@ class Questions
       'to' => new \DateTime('2019-12-30 00:00:00', new \DateTimeZone('UTC'))
     ];
   }
+
+  private const HIDE_TIMINGS = [
+    'id' => 'v_hide_timings',
+    'title' => 'Hide Timings',
+    'type' => 'select',
+    'required' => true,
+    'options' => [
+      [
+        'value' => 'Indifferent',
+        'label' => 'Indifferent',
+      ],
+      [
+        'value' => 'Yes',
+        'label' => 'Yes',
+      ],
+      [
+        'value' => 'No',
+        'label' => 'No'
+      ]
+    ],
+    'default' => 'Indifferent',
+    'description' => 'The new timings should be hidden by default on the leaderboards.',
+    'validation_error' => 'The option chosen for "Hide Timings" is invalid'
+  ];
 
   private const TIMING_METHOD_A = [
     'id' => 'v_option_a',
@@ -110,7 +135,7 @@ class Questions
     'default' => 'Indifferent',
     'description' => 'A save file that has been pre-modified and loaded onto your memory card, having set the plane crash,
         FLUDD, courtroom, and officer\'s speech cutscenes to watched, allowing them to be skipped. Runs that use this timing
-        method would start with 5:39.96 on the timer to account for skipped cutscenes.
+        method would start with 5:40.07 on the timer to account for skipped cutscenes.
         <br><br>Sample: <a href="https://www.youtube.com/watch?v=iXBclBuSyew" target="_blank" rel="noreferrer">Youtube</a>',
     'validation_error' => 'The option chosen for "Timing Method D" is invalid'
   ];
@@ -138,7 +163,7 @@ class Questions
     'description' => 'A save file that has been pre-modified and loaded onto your 
       memory card, having set all cutscene flags to watched (Exceptions: pinna 1 
       and pinna unlock cutscenes), allowing them to be skipped. Runs that use this 
-      timing method would start with 7:07.08 on the timer to account for skipped 
+      timing method would start with 7:07.50 on the timer to account for skipped 
       cutscenes.',
     'validation_error' => 'The option chosen for "Timing Method E" is invalid'
   ];
