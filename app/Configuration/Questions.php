@@ -40,7 +40,7 @@ class Questions
     'options' => [
       [
         'value' => 'Indifferent',
-        'label' => 'Indifferent',
+        'label' => 'No Vote',
       ],
       [
         'value' => 'Yes',
@@ -64,7 +64,7 @@ class Questions
     'options' => [
       [
         'value' => 'Indifferent',
-        'label' => 'Indifferent',
+        'label' => 'No Vote',
       ],
       [
         'value' => 'Yes',
@@ -91,7 +91,7 @@ class Questions
     'options' => [
       [
         'value' => 'Indifferent',
-        'label' => 'Indifferent',
+        'label' => 'No Vote',
       ],
       [
         'value' => 'Yes',
@@ -121,7 +121,7 @@ class Questions
     'options' => [
       [
         'value' => 'Indifferent',
-        'label' => 'Indifferent',
+        'label' => 'No Vote',
       ],
       [
         'value' => 'Yes',
@@ -148,7 +148,7 @@ class Questions
     'options' => [
       [
         'value' => 'Indifferent',
-        'label' => 'Indifferent',
+        'label' => 'No Vote',
       ],
       [
         'value' => 'Yes',
