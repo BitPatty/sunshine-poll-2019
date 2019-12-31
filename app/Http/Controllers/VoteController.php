@@ -7,7 +7,6 @@ use App\Configuration\Questions;
 use App\Helpers\Fetch;
 use App\Models\Vote;
 use Illuminate\Http\Request;
-use Symfony\Component\Console\Question\Question;
 use Validator;
 
 class VoteController extends Controller
@@ -104,9 +103,18 @@ class VoteController extends Controller
       ];
 
       foreach ($poll['question_list'] as $question) {
+
+        $selectedValue = $dbVote[$question['id']];
+
+        if ($question['type'] === 'select') {
+          foreach ($question['options'] as $option) {
+            if ($option['value'] === $selectedValue) $selectedValue = $option['label'];
+          }
+        }
+
         $listItems[$question['id']] = [
           'name' => $question['title'],
-          'value' => $params[$question['id']]
+          'value' => $selectedValue
         ];
       }
 
