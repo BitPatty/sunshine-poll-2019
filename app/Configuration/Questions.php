@@ -28,7 +28,7 @@ class Questions
            <img src="/img/lb_preview.png" class="img-fluid mx-auto d-block mt-5" alt="Leaderboard preview">',
       'flag' => 'has_voted',
       'from' => new \DateTime('2019-11-29 00:00:00', new \DateTimeZone('UTC')),
-      'to' => new \DateTime('2019-12-30 00:00:00', new \DateTimeZone('UTC'))
+      'to' => new \DateTime('2099-12-30 00:00:00', new \DateTimeZone('UTC'))
     ];
   }
 
