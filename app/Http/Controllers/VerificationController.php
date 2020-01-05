@@ -2,55 +2,55 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Run;
+use App\Models\User;
+use App\Models\VerificationHistory;
+use App\Models\VerificationState;
 use App\Models\Vote;
+use App\Models\VoteHistory;
+use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
-use Validator;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Validator;
 
 class VerificationController extends Controller
 {
-  public function __construct()
-  {
-
-  }
-
-  public function index(Request $request)
-  {
-    return view('Login', ['path' => '/verification']);
-  }
-
-  /**
-   * Displays the list of votes from people without any runs on SRC
-   * Updates a vote if requested
-   * @param Request $request
-   * @return \Illuminate\View\View
-   */
-  public function update(Request $request)
-  {
-    $validator = Validator::make($request->post(), [
-      'auth_key' => 'required|alpha_num|min:3',
-      'user_id' => 'regex:/^[a-zA-Z0-9]+$/u|min:1|max:64',
-      'set_state' => 'in:1,0',
-    ]);
-
-    if ($validator->fails() || ($request->post('auth_key') != null && $request->post('auth_key') !== env('ADMIN_KEY'))) {
-      if ($request->post('auth_key') != null) {
-        return view('Login', ['path' => '/verification', 'errorMessage' => 'Invalid token']);
-      } else {
-        return view('Login', ['path' => '/verification']);
-      }
-    } else {
-      if ($request->post('user_id') != null && $request->post('set_state') != null) {
-
-        $vote = Vote::where(['src_id' => $request->post('user_id'), 'has_src_run' => false])->first();
-
-        if ($vote) {
-          $vote->is_verified = $request->post('set_state') === '1' || $request->post('set_state') === 1;
-          $vote->save();
-        }
-      }
-
-      $votes = Vote::where(['has_src_run' => false])->orderBy('is_verified', 'ASC')->get();
-      return view('VerificationPanel', ['votes' => $votes, 'auth_key' => $request->post('auth_key')]);
+    public function __construct()
+    {
+        $this->middleware('auth');
     }
-  }
+
+    public function index()
+    {
+        $votes = Vote::all();
+        return view('verification_panel', ['votes' => $votes]);
+    }
+
+    public function show(Request $request, $id)
+    {
+        $vote = Vote::find($id);
+        $vote_history = VoteHistory::where(['vote_id' => $vote->id])->get();
+        $verification_history = VerificationHistory::where(['vote_id' => $vote->id])->get();
+        return view('vote_verification', ['vote' => $vote, 'vote_history' => $vote_history, 'verification_history' => $verification_history, 'privileged' => Gate::allows('update-votes')]);
+    }
+
+    public function update(Request $request, $id)
+    {
+        if (!Gate::allows('update-votes')) abort(403);
+
+        $validator = Validator::make($request->post(), [
+            'res' => ['required', 'in:verify,reject']
+        ]);
+
+        if ($validator->fails()) abort(500);
+
+        $vote = Vote::find($id);
+        $vote->state = $request->post('res') === 'verify' ? VerificationState::VERIFIED : VerificationState::REJECTED;
+        $vote->save();
+
+        VerificationHistory::addEntry($vote, $request->user());
+        return $this->show($request, $id);
+    }
 }
