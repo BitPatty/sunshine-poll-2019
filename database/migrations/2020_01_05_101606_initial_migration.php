@@ -17,15 +17,24 @@ class InitialMigration extends Migration
             $table->timestamps();
         });
 
+        Schema::create('t_category', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('game_id', 30)->unique();
+            $table->string('category_id', 30)->unique();
+            $table->string('game_name', 80);
+            $table->string('category_name', 80);
+        });
+
         Schema::create('t_run', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id');
             $table->string('src_id', 30)->unique();
-            $table->string('category_id');
+            $table->unsignedBigInteger('category_id');
             $table->unsignedInteger('personal_best');
             $table->date('run_date');
             $table->timestamps();
 
+            $table->foreign('category_id')->references('id')->on('t_category');
             $table->foreign('user_id')->references('id')->on('t_user');
         });
 
@@ -39,7 +48,7 @@ class InitialMigration extends Migration
             $table->enum('v_hide_timings', ['No Vote', 'Yes', 'No'])->default('No Vote');
             $table->string('custom_run_url')->nullable();
             $table->string('comment', 1000)->nullable();
-            $table->enum('state', ['Pending', 'Verified', 'Rejected', 'Auto-Verified']);
+            $table->enum('state', ['Pending', 'Verified', 'Rejected', 'Auto-Verified'])->default('Pending');
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('t_user');
@@ -66,6 +75,7 @@ class InitialMigration extends Migration
             $table->enum('v_hide_timings', ['No Vote', 'Yes', 'No'])->default('No Vote');
             $table->string('custom_run_url')->nullable();
             $table->string('comment', 1000)->nullable();
+            $table->enum('state', ['Pending', 'Verified', 'Rejected', 'Auto-Verified']);
             $table->timestamps();
 
             $table->foreign('vote_id')->references('id')->on('t_vote');
