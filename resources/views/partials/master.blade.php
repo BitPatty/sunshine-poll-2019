@@ -1,87 +1,67 @@
 <!DOCTYPE HTML>
 <html lang="en">
 <head>
-  <meta
-    charset="utf-8"
-  />
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1, shrink-to-fit=no"
-  />
-  <meta
-    http-equiv="X-UA-Compatible"
-    content="IE=edge,chrome=1"
-  />
-  <link
-    rel="stylesheet"
-    href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
-    crossorigin="anonymous"
-  >
-  <script
-    src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-    crossorigin="anonymous"
-  ></script>
-  <script
-    src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-    crossorigin="anonymous"
-  ></script>
-  <script
-    src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-    crossorigin="anonymous"
-  ></script>
-  <title>@yield('title')</title>
-  <style>
-    body {
-      text-align: center;
-      padding-top: 80px;
-    }
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Sunshine Timing Method Vote 2019."/>
+    <meta name="revisit-after" content="30 days"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css">
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans"/>
+    <link href="https://cdn.materialdesignicons.com/4.7.95/css/materialdesignicons.min.css" rel="stylesheet"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet"/>
+    <title>@yield('title')</title>
+    <style>
+        body {
+            font-family: 'Open Sans', sans-serif;
+            padding: 15px;
+        }
 
-    .content__wrapper {
-      text-align: left;
-      width: 100%;
-      max-width: 1000px;
-      display: inline-block;;
-    }
-  </style>
+        .field {
+            padding: 20px 5px;
+        }
+
+        .field .label {
+            font-size: 1.1rem;
+        }
+
+        .field p {
+            margin-top: 10px;
+            color: #737373;
+            padding: 0px 5px;
+            font-size: .9rem;
+        }
+
+        .title.collapse {
+            background: #5d5dbd;
+            color: white;
+            padding: 5px;
+            cursor: pointer;
+            border-radius: 3px;
+            margin-bottom: 0;
+        }
+
+        .title.collapse:hover {
+            background: #21238b;
+        }
+
+        .table.collapsed {
+            visibility: collapse;
+        }
+
+        .table {
+            margin-bottom: 20px;
+        }
+
+        td:first-child {
+            width: 1px;
+            white-space: nowrap;
+        }
+    </style>
 </head>
-<body
-  class="bg-light p-2"
->
-<header>
-  <div
-    class="position-relative overflow-hidden text-center bg-light"
-  >
-    <div
-      class="col-md-5 mx-auto my-5"
-    >
-      <h1>
-        @yield('title')
-      </h1>
-      <p
-        class="lead font-weight-normal"
-      >
-        @yield('subtitle')
-      </p>
-
-      <div
-        class="alert alert-danger"
-        role="alert"
-      >
-        <b>THIS POLL IS NOT LIVE YET - VOTES WILL BE RESET!</b>
-      </div>
-    </div>
-  </div>
-</header>
-<div
-  class="content__wrapper"
->
-  @yield('content')
-</div>
-@yield('scripts')
+<body class="is-widescreen">
+<main class="container">
+    @yield('content')
+</main>
 </body>
-
+@yield('scripts')
 </html>

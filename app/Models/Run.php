@@ -6,14 +6,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class Run extends Model
 {
-  protected $fillable = [
-    'src_id',
-    'fk_t_vote',
-    'fk_t_category',
-    'personal_best',
-    'run_date'
-  ];
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
 
-  protected $table = 't_run';
-  protected $primaryKey = 'id';
+    protected $fillable = [
+        'user_id', 'src_id', 'personal_best', 'run_date'
+    ];
+
+    protected $table = "t_run";
 }
