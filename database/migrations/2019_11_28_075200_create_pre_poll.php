@@ -11,10 +11,6 @@ class CreatePrePoll extends Migration
     \DB::statement("DROP VIEW IF EXISTS v_raw");
 
     Schema::table('t_vote', function (Blueprint $table) {
-      $table->dropColumn('v_allow_multiple');
-    });
-
-    Schema::table('t_vote', function (Blueprint $table) {
       $table->enum('v_allow_multiple', [
         'Indifferent'
         , 'Any that gain 50% or more'

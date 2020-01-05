@@ -17,7 +17,6 @@ class CreateResultsView extends Migration
                    t_vote.is_verified               AS 'is_verified', 
                    t_vote.custom_run_url            AS 'custom_run_url', 
                    t_vote.v_hide_timings            AS 'v_hide_timings', 
-                   t_vote.v_allow_multiple          AS 'v_allow_multiple', 
                    t_vote.v_option_a                AS 'v_option_a', 
                    t_vote.v_option_b                AS 'v_option_b', 
                    t_vote.v_option_c                AS 'v_option_c', 
