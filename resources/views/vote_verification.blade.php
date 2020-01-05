@@ -22,7 +22,24 @@
     <section class="section">
         <h3 class="title is-3">Verification History</h3>
         @if($privileged)
-            TODO
+            <table class="table is-striped is-fullwidth">
+                <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Verifier</th>
+                    <th>Resolution</th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach($verification_history as $v)
+                    <tr>
+                        <td>{{ $v->created_at }} UTC</td>
+                        <td>{{ $v->user->src_name }}</td>
+                        <td>{{ $v->state }}</td>
+                    </tr>
+                @endforeach
+                </tbody>
+            </table>
         @else
             <em>The verification history is only visible to moderators.</em>
         @endif

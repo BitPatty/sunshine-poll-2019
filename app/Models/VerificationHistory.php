@@ -25,12 +25,12 @@ class VerificationHistory extends Model
 
     protected $table = "h_verification";
 
-    public static function addEntry(Vote $vote)
+    public static function addEntry(Vote $vote, User $user)
     {
-        $oldVote = Vote::find($vote->id);
         $entry = new VerificationHistory();
-        $entry->old_state = $oldVote->state;
-        $entry->new_state = $vote->state;
+        $entry->state = $vote->state;
+        $entry->user_id = $user->id;
+        $entry->vote_id = $vote->id;
         $entry->save();
     }
 }
