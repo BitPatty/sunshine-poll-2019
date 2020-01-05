@@ -19,10 +19,11 @@ class InitialMigration extends Migration
 
         Schema::create('t_category', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('game_id', 30)->unique();
+            $table->string('game_id', 30);
             $table->string('category_id', 30)->unique();
             $table->string('game_name', 80);
             $table->string('category_name', 80);
+            $table->timestamps();
         });
 
         Schema::create('t_run', function (Blueprint $table) {
