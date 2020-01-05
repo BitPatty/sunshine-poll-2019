@@ -49,22 +49,26 @@ class VoteController extends Controller
         ]), 412);
     }
 
-    $src_profile = $this->fetchSRCProfile($params['src_token']);
+    $dbVote = Vote::where(['api_key' => hash('sha256', $params['src_token'])])->first();
 
-    if ($src_profile == null) {
-      return response(view('Home', [
-        'errorMessages' => [Messages::FAIL_RETRIEVE_PROFILE],
-        'selectedValues' => $params
-      ]), 400);
-    } else {
-      $dbVote = Vote::where(['src_id' => $src_profile['id']])->first();
+    if (!$dbVote) {
+      $src_profile = $this->fetchSRCProfile($params['src_token']);
 
-      if (!$dbVote) {
-        if (isset($params['custom_run_url'])
-          || $request->post('submitting_custom_run') === '1') {
+      if (!isset($src_profile)) {
+        return response(view('Home', [
+          'errorMessages' => [Messages::FAIL_RETRIEVE_PROFILE],
+          'selectedValues' => $params
+        ]), 400);
+      } else {
+        $dbVote = Vote::where(['src_id' => $src_profile['id']])->first();
 
+        if (!$dbVote) {
           $dbVote = new Vote();
-        } else {
+          $dbVote->src_id = $src_profile['id'];
+          $dbVote->src_name = $src_profile['names']['international'];
+          $dbVote->api_key = hash('sha256', $params['src_token']);
+          $dbVote->save();
+
           $infoMessages = [Messages::MISSING_RUN_INIT];
           return response(view('Home', [
             'infoMessages' => $infoMessages,
@@ -72,61 +76,60 @@ class VoteController extends Controller
             'selectedValues' => $params
           ]));
         }
-      } else if ($dbVote->has_src_run == false
-        && $params['custom_run_url'] == null
-        && $request->post('submitting_custom_run') !== '1') {
-
-        $params['custom_run_url'] = $dbVote->custom_run_url;
-        $infoMessages = [Messages::MISSING_RUN_UPDATE];
-        return response(view('Home', [
-          'infoMessages' => $infoMessages,
-          'missingRun' => true,
-          'selectedValues' => $params
-        ]));
       }
-
-      $dbVote->src_id = $src_profile['id'];
-      $dbVote->src_name = $src_profile['names']['international'];
-      $this->mapVoteModel($dbVote, $params);
-      $dbVote->save();
-
-      $listItems = [
-
-        'src_data' => [
-          'name' => 'SRC Profile',
-          'value' => $dbVote->src_name . ' (' . $dbVote->src_id . ')'
-        ],
-        'src_run' => [
-          'name' => 'Verification',
-          'value' => $dbVote->has_src_run ? '(SRC verified)' : $dbVote->custom_run_url ?? '-'
-        ]
-      ];
-
-      foreach ($poll['question_list'] as $question) {
-
-        $selectedValue = $dbVote[$question['id']];
-
-        if ($question['type'] === 'select') {
-          foreach ($question['options'] as $option) {
-            if ($option['value'] === $selectedValue) $selectedValue = $option['label'];
-          }
-        }
-
-        $listItems[$question['id']] = [
-          'name' => $question['title'],
-          'value' => $selectedValue
-        ];
-      }
-
-      return view('Success', ['listItems' => $listItems]);
     }
+
+    if ($dbVote->has_src_run == false
+      && $params['custom_run_url'] == null
+      && $request->post('submitting_custom_run') !== '1') {
+
+      $params['custom_run_url'] = $dbVote->custom_run_url;
+      $infoMessages = [Messages::MISSING_RUN_UPDATE];
+      return response(view('Home', [
+        'infoMessages' => $infoMessages,
+        'missingRun' => true,
+        'selectedValues' => $params
+      ]));
+    } else if (isset($params['custom_run_url'])
+      || $request->post('submitting_custom_run') === '1') {
+      $dbVote->custom_run_url = $params['custom_run_url'];
+      $dbVote->save();
+    }
+
+    $this->mapVoteModel($dbVote, $params);
+    $dbVote[Questions::getPoll()['flag']] = true;
+    $dbVote->save();
+
+    $listItems = ['src_data' => ['name' => 'SRC Profile',
+      'value' => $dbVote->src_name . ' (' . $dbVote->src_id . ')'],
+      'src_run' => ['name' => 'Verification',
+        'value' => $dbVote->has_src_run ? '(SRC verified)' : $dbVote->custom_run_url ?? '-']];
+
+    foreach ($poll['question_list'] as $question) {
+
+      $selectedValue = $dbVote[$question['id']];
+
+      if ($question['type'] === 'select') {
+        foreach ($question['options'] as $option) {
+          if ($option['value'] === $selectedValue) $selectedValue = $option['label'];
+        }
+      }
+
+      $listItems[$question['id']] = [
+        'name' => $question['title'],
+        'value' => $selectedValue
+      ];
+    }
+
+    return view('Success', ['listItems' => $listItems]);
   }
 
   /**
    * Fetch a users SRC profile based on his api token
    * @param string $token The api token
    */
-  private function fetchSRCProfile(string $token)
+  private
+  function fetchSRCProfile(string $token)
   {
     try {
       $src_data = Fetch::Load('https://www.speedrun.com/api/v1/profile', ["X-API-Key: $token"]);
@@ -145,7 +148,8 @@ class VoteController extends Controller
    * Checks whether a poll is closed
    * @return bool
    */
-  private function isPollClosed()
+  private
+  function isPollClosed()
   {
     $now = new \DateTime();
     $now->setTimezone(new \DateTimeZone('UTC'));
@@ -159,21 +163,23 @@ class VoteController extends Controller
    * @param Vote $model
    * @param array $params
    */
-  private function mapVoteModel(Vote $model, Array $params)
+  private
+  function mapVoteModel(Vote $model, Array $params)
   {
     foreach (Questions::getPoll()['question_list'] as $question) {
       $model[$question['id']] = $params[$question['id']];
     }
 
+    $model->api_key = hash('sha256', $params['src_token']);
     $model->custom_run_url = $params['custom_run_url'] ?? $model->custom_run_url;
-    $model[Questions::getPoll()['flag']] = true;
   }
 
   /**
    * Parse POST params
    * @param Request $request
    */
-  private function parseParams(Request $request)
+  private
+  function parseParams(Request $request)
   {
     $params = [
       'src_token' => trim($request->post('src_token') ?? ''),
@@ -192,7 +198,8 @@ class VoteController extends Controller
    * Parse validation errors into a human readable form
    * @param Validator $validator
    */
-  private function parseValidationErrors($validator)
+  private
+  function parseValidationErrors($validator)
   {
     $errorMessages = [];
 
@@ -224,7 +231,8 @@ class VoteController extends Controller
   /**
    * Build validators based on the questions
    */
-  private function buildValidators()
+  private
+  function buildValidators()
   {
     $validators = [
       'src_token' => 'required|regex:/^[a-zA-Z0-9 ]+$/u|min:1|max:64',
