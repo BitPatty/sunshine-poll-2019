@@ -24,12 +24,16 @@ class VerificationController extends Controller
 
     public function index()
     {
+        if (!Gate::allows('read-votes')) abort(403);
+        
         $votes = Vote::all();
         return view('verification_panel', ['votes' => $votes]);
     }
 
     public function show(Request $request, $id)
     {
+        if (!Gate::allows('read-votes')) abort(403);
+        
         $vote = Vote::find($id);
         $vote_history = VoteHistory::where(['vote_id' => $vote->id])->get();
         $verification_history = VerificationHistory::where(['vote_id' => $vote->id])->get();
