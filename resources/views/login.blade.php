@@ -18,7 +18,7 @@
             </div>
         @endif
         <h3>Verification Panel</h3>
-        <p>Access to this are is restricted.</p>
+        <p>Access to this area is restricted.</p>
         <form action="/auth" method="POST">
             @csrf
             <div class="field">
