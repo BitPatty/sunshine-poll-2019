@@ -17,6 +17,9 @@
                 </ul>
             </div>
         @else
+            <div class="notification is-warning">
+                This poll is not live yet! Votes will be reset!
+            </div>
             <p><b>Voting system</b>: Everyone will be voting on whether or not they agree that a timing method should be
                 allowed
                 on the leaderboard, as well as specificities contained in that. Any and all timing methods that receive
