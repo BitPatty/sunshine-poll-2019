@@ -9,7 +9,7 @@ return [
     'preview_description' => '',
     'sections' => [
         'src_token' => [
-            'header' => '[SRCのトークン]',
+            'header' => 'SRCのトークン',
             'description' => 'このサイトからトークンを見つけてそれを入力してください。 <a href="https://www.speedrun.com/api/auth" target="_blank" rel="noreferrer">https://www.speedrun.com/api/auth</a>',
             'placeholder' => 'Your token...'
         ],
