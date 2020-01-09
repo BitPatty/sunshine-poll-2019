@@ -4,8 +4,8 @@
 
 @section('content')
     <section class="section has-text-centered">
-        <h1 class="title is-h1">Super Mario Sunshine</h1>
-        <h2 class="subtitle">Timing Method Vote 2020</h2>
+        <h1 class="title is-h1">{{ trans('poll.title') }}</h1>
+        <h2 class="subtitle">{{ trans('poll.subtitle') }}</h2>
     </section>
     <section class="section">
         @if($errors->any())
