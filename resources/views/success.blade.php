@@ -8,8 +8,7 @@
         <h2 class="subtitle">Timing Method Vote 2020</h2>
     </section>
     <section class="section">
-        <p>Your vote has been registered. Changed your mind? Fill in <a href="/" title="Poll">the form</a> again to
-            update your vote.</p>
+        <p>{!! trans('poll.success') !!}</p>
         <br/>
         @include('partials.vote_summary', ['vote' => $vote])
     </section>
