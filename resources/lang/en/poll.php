@@ -7,7 +7,7 @@ return [
     'sections' => [
         'src_token' => [
             'header' => 'Speedrun.com Token',
-            'description' => 'The token is required to verify your speedrun.com account. You can find your token <a href="https://www.speedrun.com/api/auth" target="_blank" rel="noreferrer">here</a>.',
+            'description' => 'The token is required to verify your speedrun.com account. You can find your token here: <a href="https://www.speedrun.com/api/auth" target="_blank" rel="noreferrer">https://www.speedrun.com/api/auth</a>.',
             'placeholder' => 'Your token...'
         ],
         'hide_timings' => [
@@ -21,8 +21,8 @@ return [
         ],
         'timing_method_a' => [
             'header' => 'Timing Method A',
-            'description' => 'The file used is a premade file saved after having watched the FLUDD cutscene on airstrip. When                    loading this file, the plane crash and FLUDD cutscene may be skipped. Runs that use this timing                    method will start with 2:30.20 on the timer to account for skipped cutscenes.',
-            'sample' => 'Sample: <a href="https://www.youtube.com/watch?v=cLhh4d4wZbw" target="_blank" rel="noreferrer">Youtube</a>',
+            'description' => 'The file used is a premade file saved after having watched the FLUDD cutscene on airstrip. When loading this file, the plane crash and FLUDD cutscene may be skipped. Runs that use this timing method will start with 2:30.20 on the timer to account for skipped cutscenes.',
+            'sample' => 'Sample: <a href="https://www.youtube.com/watch?v=cLhh4d4wZbw" target="_blank" rel="noreferrer">https://www.youtube.com/watch?v=cLhh4d4wZbw</a>',
             'options' => [
                 'yes' => 'Yes',
                 'no' => 'No',
@@ -31,8 +31,8 @@ return [
         ],
         'timing_method_b' => [
             'header' => 'Timing Method B',
-            'description' => 'Two premade files are used. One is saved after having watched the FLUDD cutscene on airstrip. The                    second is saved after being loaded into delfino plaza. The player would load the first file, skip                    the plane crash and FLUDD cutscenes, complete airstrip, reset (save prompt must appear before the                    screen fades to black to be considered valid), then load the 2nd file and continue the run in                    delfino, skipping the courtroom and officer\'s speech cutscenes. Runs that use this timing method                    will start with 5:32.60 on the timer to account for skipped cutscenes.',
-            'sample' => 'Sample: <a href="https://www.youtube.com/watch?v=CoAgno0ktjQ" target="_blank" rel="noreferrer">Youtube</a>',
+            'description' => 'Two premade files are used. One is saved after having watched the FLUDD cutscene on airstrip. The second is saved after being loaded into delfino plaza. The player would load the first file, skip the plane crash and FLUDD cutscenes, complete airstrip, reset (save prompt must appear before the screen fades to black to be considered valid), then load the 2nd file and continue the run in delfino, skipping the courtroom and officer\'s speech cutscenes. Runs that use this timing method will start with 5:32.60 on the timer to account for skipped cutscenes.',
+            'sample' => 'Sample: <a href="https://www.youtube.com/watch?v=CoAgno0ktjQ" target="_blank" rel="noreferrer">https://www.youtube.com/watch?v=CoAgno0ktjQ</a>',
             'options' => [
                 'yes' => 'Yes',
                 'no' => 'No',
@@ -41,8 +41,8 @@ return [
         ],
         'timing_method_c' => [
             'header' => 'Timing Method C',
-            'description' => 'A save file that has been pre-modified and loaded onto your memory card, having set the plane crash,                    FLUDD, courtroom, and officer\'s speech cutscenes to watched, allowing them to be skipped. Runs that                    use this timing method would start with 5:40.07 on the timer to account for skipped cutscenes.',
-            'sample' => 'Sample: <a href="https://www.youtube.com/watch?v=iXBclBuSyew" target="_blank" rel="noreferrer">Youtube</a>',
+            'description' => 'A save file that has been pre-modified and loaded onto your memory card, having set the plane crash, FLUDD, courtroom, and officer\'s speech cutscenes to watched, allowing them to be skipped. Runs that use this timing method would start with 5:40.07 on the timer to account for skipped cutscenes.',
+            'sample' => 'Sample: <a href="https://www.youtube.com/watch?v=iXBclBuSyew" target="_blank" rel="noreferrer">https://www.youtube.com/watch?v=iXBclBuSyew</a>',
             'options' => [
                 'yes' => 'Yes',
                 'no' => 'No',
@@ -51,7 +51,7 @@ return [
         ],
         'timing_method_d' => [
             'header' => 'Timing Method D',
-            'description' => 'A save file that has been pre-modified and loaded onto your memory card, having set all cutscene                    flags to watched (Exceptions: pinna 1 and pinna unlock cutscenes), allowing them to be skipped. Runs                    that use this timing method would start with 7:07.50 on the timer to account for skipped                    cutscenes.',
+            'description' => 'A save file that has been pre-modified and loaded onto your memory card, having set all cutscene flags to watched (Exceptions: pinna 1 and pinna unlock cutscenes), allowing them to be skipped. Runs that use this timing method would start with 7:07.50 on the timer to account for skipped cutscenes.',
             'options' => [
                 'yes' => 'Yes',
                 'no' => 'No',
