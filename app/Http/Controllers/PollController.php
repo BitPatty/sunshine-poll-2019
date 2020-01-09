@@ -19,11 +19,13 @@ class PollController extends Controller
 
     public function index()
     {
+        if (time() > env('POLL_CLOSE_DT')) return view('poll_closed');
         return view('poll');
     }
 
     public function submit(Request $request)
     {
+        if (time() > env('POLL_CLOSE_DT')) return view('poll_closed');
         $validator = $this->createSubmissionValidator($request->post());
 
         if ($validator->fails()) {

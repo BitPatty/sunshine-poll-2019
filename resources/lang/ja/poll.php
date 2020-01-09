@@ -3,6 +3,7 @@
 return [
     'title' => '【スーパーマリオサンシャイン　タイマー方式投票】',
     'subtitle' => '',
+    'closed' => 'The poll is closed.',
     'voting_system' => '<b>投票のしくみ</b>： タイマーの取り方がいくつか提示されているので、それを正式なやり方として認めるかどうかを投票していただきます。過半数の賛成が得られたものをhttp://Speedrun.com(以下SRC)で正式に採用します。その場合はAny%だけでなく、79枚や120枚など全ての(新規ファイルを用いる)カテゴリーで採用されることになります。',
     'voting_requirement' => '',
     'preview_description' => '',
