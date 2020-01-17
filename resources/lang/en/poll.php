@@ -5,7 +5,7 @@ return [
     'subtitle' => 'Timing Method Vote 2020',
     'closed' => 'The poll is closed.',
     'voting_system' => '<b>Voting system</b>: Everyone will be voting on whether or not they agree that a timing method should be allowed on the leaderboard, as well as specificities contained in that. Any and all timing methods that receive over 50% approval will be allowed on the leaderboard. These changes will apply to all categories that currently start from a new file (Any%, 120 Shines, etc.). Note: File Select will always be allowed on the board, regardless of the poll results.',
-    'voting_requirement' => 'To be able to vote you need a <a href="https://speedrun.com" target="_blank" rel="noreferrer">speedrun.com</a> account. Votes from people with runs on the Super Mario Sunshine main or category extension leaderboards are automatically verified, while all other votes will go through a process of manual verification. ',
+    'voting_requirement' => 'To be able to vote you need a <a href="https://speedrun.com" target="_blank" rel="noreferrer">speedrun.com</a> account. Votes from people with runs on the Super Mario Sunshine main leaderboards are automatically verified, while all other votes will go through a process of manual verification. ',
     'preview_description' => 'The different timing methods will be separated by variables on the leaderboard:',
     'sections' => [
         'src_token' => [
