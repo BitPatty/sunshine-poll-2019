@@ -19,6 +19,10 @@ class User extends Model implements AuthenticatableContract,
 {
     use Notifiable, Authenticatable, Authorizable, CanResetPassword;
 
+    public function runs() {
+        return $this->hasMany(Run::class, 'user_id', 'id');
+    }
+
     protected $fillable = [
         'src_id', 'src_name', 'src_api_token'
     ];

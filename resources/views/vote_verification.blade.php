@@ -18,26 +18,56 @@
         @include('partials.vote_summary', ['vote' => $vote])
     </section>
     <section class="section">
-        <h3 class="title is-3">Verification History</h3>
-        @if($privileged)
+        <b>Runs</b>
+        @if(count($vote->user->runs) === 0)
+            <div>
+                <em>No runs found</em>
+            </div>
+        @else
             <table class="table is-striped is-fullwidth">
                 <thead>
                 <tr>
                     <th>Date</th>
-                    <th>Verifier</th>
-                    <th>Resolution</th>
+                    <th>SRC Link</th>
                 </tr>
                 </thead>
                 <tbody>
-                @foreach($verification_history as $v)
+                @foreach($vote->user->runs as $r)
                     <tr>
-                        <td>{{ $v->created_at }} UTC</td>
-                        <td>{{ $v->user->src_name }}</td>
-                        <td>{{ $v->state }}</td>
+                        <td>{{ $r->run_date }}</td>
+                        <td><a href="https://speedrun.com/run/{{$r->src_id}}" target="_blank"
+                               rel="noreferrer">{{ $r->category->category_name }}</a></td>
                     </tr>
                 @endforeach
                 </tbody>
             </table>
+        @endif
+    </section>
+    <section class="section">
+        <h3 class="title is-3">Verification History</h3>
+        @if($privileged)
+            @if(count($verification_history) === 0)
+                <em>No mod verification registered.</em>
+            @else
+                <table class="table is-striped is-fullwidth">
+                    <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Verifier</th>
+                        <th>Resolution</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach($verification_history as $v)
+                        <tr>
+                            <td>{{ $v->created_at }} UTC</td>
+                            <td>{{ $v->user->src_name }}</td>
+                            <td>{{ $v->state }}</td>
+                        </tr>
+                    @endforeach
+                    </tbody>
+                </table>
+            @endif
         @else
             <em>The verification history is only visible to moderators.</em>
         @endif

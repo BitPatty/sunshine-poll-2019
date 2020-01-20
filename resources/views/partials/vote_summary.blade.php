@@ -12,7 +12,8 @@
     </tr>
     <tr>
         <td>Name:</td>
-        <td>{{ $vote->user->src_name }}</td>
+        <td><a href="https://speedrun.com/user/{{ $vote->user->src_name }}" target="_blank"
+               rel="noreferrer">{{ $vote->user->src_name }}</a></td>
     </tr>
     <tr>
         <td>Hide Timings:</td>
