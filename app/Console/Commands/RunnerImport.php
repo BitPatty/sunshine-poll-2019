@@ -10,7 +10,7 @@ use Illuminate\Console\Command;
 
 class RunnerImport extends Command
 {
-    protected $signature = 'runners:import';
+    protected $signature = 'runs:import';
     protected $description = 'Imports Runners from SRC';
 
 
