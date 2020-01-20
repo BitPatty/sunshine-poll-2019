@@ -73,7 +73,7 @@ class PollController extends Controller
         $vote->v_timing_method_d = $request->post('v_timing_method_d');
         $vote->custom_run_url = $request->post('custom_run_url');
         $vote->comment = trim($request->post('comment') ?? '');
-        $vote->state = $isVerified ? VerificationState::AUTO_VERIFIED : $vote->state === VerificationState::VERIFIED ? VerificationState::VERIFIED : VerificationState::PENDING;
+        $vote->state = $isVerified ? VerificationState::AUTO_VERIFIED : ($vote->state === VerificationState::VERIFIED ? VerificationState::VERIFIED : VerificationState::PENDING);
         $vote->save();
         $vote = Vote::where(['user_id' => $user->id])->first();
         VoteHistory::addEntry($vote);
