@@ -83,6 +83,7 @@ return [
     ],
     'language_switch' => [
         'label' => '日本語のバージョン',
-        'url' => 'https://jp.q.zint.ch'
+        'url' => 'https://jp.q.zint.ch',
+        'results_url' => 'https://jp.q.zint.ch/results'
     ]
 ];

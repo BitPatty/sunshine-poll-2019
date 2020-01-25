@@ -84,6 +84,7 @@ return [
     ],
     'language_switch' => [
         'label' => 'English Version',
-        'url' => 'https://q.zint.ch'
+        'url' => 'https://q.zint.ch',
+        'results_url' => 'https://q.zint.ch/results'
     ]
 ];

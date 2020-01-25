@@ -4,6 +4,8 @@
     <section class="section has-text-centered">
         <h1 class="title is-h1">{{ trans('poll.title') }}</h1>
         <h2 class="subtitle">{{ trans('poll.subtitle') }}</h2>
+        <a title="Language Switch"
+           href="{{ trans('poll.language_switch.results_url') }}">{{ trans('poll.language_switch.label') }}</a>
     </section>
     <section class="section">
         <div class="chart_collection" id="charts">
