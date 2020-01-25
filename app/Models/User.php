@@ -64,7 +64,7 @@ class User extends Model implements AuthenticatableContract,
 
     public static function hashKey(string $token)
     {
-        return hash('sha256', $token);
+        return hash('sha512', $token);
     }
 
     private static function fetchSrcProfile(string $token)
