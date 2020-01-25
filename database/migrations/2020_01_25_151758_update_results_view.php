@@ -13,85 +13,126 @@ class UpdateResultsView extends Migration
      */
     public function up()
     {
-        \Illuminate\Support\Facades\DB::statement('DROP VIEW v_result');
+        \Illuminate\Support\Facades\DB::statement('DROP VIEW IF EXISTS v_verified_vote;');
+        \Illuminate\Support\Facades\DB::statement(' DROP VIEW IF EXISTS v_result;');
+        \Illuminate\Support\Facades\DB::statement('
+        CREATE VIEW v_verified_vote AS
+            SELECT 
+                *
+            FROM
+                t_vote
+            WHERE
+                state = \'Verified\'
+                    OR state = \'Auto-Verified\';
+        ');
 
         \Illuminate\Support\Facades\DB::statement('
-        CREATE VIEW v_result 
-        AS 
-          WITH votes 
-               AS (SELECT * 
-                   FROM   t_vote 
-                   WHERE  state = \'Verified\' 
-                           OR state = \'Auto-Verified\') SELECT 
-          \'timing_method_a\' AS \'label\', 
-                 a.*, 
-                 b.*, 
-                 c.* 
-          FROM   (SELECT Count(*) AS \'Yes\' 
-                  FROM   votes 
-                  WHERE  v_timing_method_a = \'Yes\') AS a, 
-                 (SELECT Count(*) AS \'No\' 
-                  FROM   votes 
-                  WHERE  v_timing_method_a = \'No\') AS b, 
-                 (SELECT Count(*) AS \'No Vote\' 
-                  FROM   votes 
-                  WHERE  v_timing_method_a = \'No Vote\') AS c 
-          UNION ALL 
-          SELECT \'timing_method_b\' AS \'label\', 
-                 a.*, 
-                 b.*, 
-                 c.* 
-          FROM   (SELECT Count(*) AS \'Yes\' 
-                  FROM   votes 
-                  WHERE  v_timing_method_b = \'Yes\') AS a, 
-                 (SELECT Count(*) AS \'No\' 
-                  FROM   votes 
-                  WHERE  v_timing_method_b = \'No\') AS b, 
-                 (SELECT Count(*) AS \'No Vote\' 
-                  FROM   votes 
-                  WHERE  v_timing_method_b = \'No Vote\') AS c 
-          UNION ALL 
-          SELECT \'timing_method_c\' AS \'label\', 
-                 a.*, 
-                 b.*, 
-                 c.* 
-          FROM   (SELECT Count(*) AS \'Yes\' 
-                  FROM   votes 
-                  WHERE  v_timing_method_c = \'Yes\') AS a, 
-                 (SELECT Count(*) AS \'No\' 
-                  FROM   votes 
-                  WHERE  v_timing_method_c = \'No\') AS b, 
-                 (SELECT Count(*) AS \'No Vote\' 
-                  FROM   votes 
-                  WHERE  v_timing_method_c = \'No Vote\') AS c 
-          UNION ALL 
-          SELECT \'timing_method_d\' AS \'label\', 
-                 a.*, 
-                 b.*, 
-                 c.* 
-          FROM   (SELECT Count(*) AS \'Yes\' 
-                  FROM   votes 
-                  WHERE  v_timing_method_d = \'Yes\') AS a, 
-                 (SELECT Count(*) AS \'No\' 
-                  FROM   votes 
-                  WHERE  v_timing_method_d = \'No\') AS b, 
-                 (SELECT Count(*) AS \'No Vote\' 
-                  FROM   votes 
-                  WHERE  v_timing_method_d = \'No Vote\') AS c 
-          UNION ALL 
-          SELECT \'hide_timings\' AS \'label\', 
-                 a.*, 
-                 b.*, 
-                 c.* 
-          FROM   (SELECT Count(*) AS \'Yes\' 
-                  FROM   votes 
-                  WHERE  v_hide_timings = \'Yes\') AS a, 
-                 (SELECT Count(*) AS \'No\' 
-                  FROM   votes 
-                  WHERE  v_hide_timings = \'No\') AS b, 
-                 (SELECT Count(*) AS \'No Vote\' 
-                  FROM   votes 
-                  WHERE  v_hide_timings = \'No Vote\') AS c; 
+        CREATE VIEW v_result AS
+            SELECT 
+                \'timing_method_a\' AS \'label\', a.*, b.*, c.*
+            FROM
+                (SELECT 
+                    COUNT(*) AS \'Yes\'
+                FROM
+                    v_verified_vote
+                WHERE
+                    v_timing_method_a = \'Yes\') AS a,
+                (SELECT 
+                    COUNT(*) AS \'No\'
+                FROM
+                    v_verified_vote
+                WHERE
+                    v_timing_method_a = \'No\') AS b,
+                (SELECT 
+                    COUNT(*) AS \'No Vote\'
+                FROM
+                    v_verified_vote
+                WHERE
+                    v_timing_method_a = \'No Vote\') AS c 
+            UNION ALL SELECT 
+                \'timing_method_b\' AS \'label\', a.*, b.*, c.*
+            FROM
+                (SELECT 
+                    COUNT(*) AS \'Yes\'
+                FROM
+                    v_verified_vote
+                WHERE
+                    v_timing_method_b = \'Yes\') AS a,
+                (SELECT 
+                    COUNT(*) AS \'No\'
+                FROM
+                    v_verified_vote
+                WHERE
+                    v_timing_method_b = \'No\') AS b,
+                (SELECT 
+                    COUNT(*) AS \'No Vote\'
+                FROM
+                    v_verified_vote
+                WHERE
+                    v_timing_method_b = \'No Vote\') AS c 
+            UNION ALL SELECT 
+                \'timing_method_c\' AS \'label\', a.*, b.*, c.*
+            FROM
+                (SELECT 
+                    COUNT(*) AS \'Yes\'
+                FROM
+                    v_verified_vote
+                WHERE
+                    v_timing_method_c = \'Yes\') AS a,
+                (SELECT 
+                    COUNT(*) AS \'No\'
+                FROM
+                    v_verified_vote
+                WHERE
+                    v_timing_method_c = \'No\') AS b,
+                (SELECT 
+                    COUNT(*) AS \'No Vote\'
+                FROM
+                    v_verified_vote
+                WHERE
+                    v_timing_method_c = \'No Vote\') AS c 
+            UNION ALL SELECT 
+                \'timing_method_d\' AS \'label\', a.*, b.*, c.*
+            FROM
+                (SELECT 
+                    COUNT(*) AS \'Yes\'
+                FROM
+                    v_verified_vote
+                WHERE
+                    v_timing_method_d = \'Yes\') AS a,
+                (SELECT 
+                    COUNT(*) AS \'No\'
+                FROM
+                    v_verified_vote
+                WHERE
+                    v_timing_method_d = \'No\') AS b,
+                (SELECT 
+                    COUNT(*) AS \'No Vote\'
+                FROM
+                    v_verified_vote
+                WHERE
+                    v_timing_method_d = \'No Vote\') AS c 
+            UNION ALL SELECT 
+                \'hide_timings\' AS \'label\', a.*, b.*, c.*
+            FROM
+                (SELECT 
+                    COUNT(*) AS \'Yes\'
+                FROM
+                    v_verified_vote
+                WHERE
+                    v_hide_timings = \'Yes\') AS a,
+                (SELECT 
+                    COUNT(*) AS \'No\'
+                FROM
+                    v_verified_vote
+                WHERE
+                    v_hide_timings = \'No\') AS b,
+                (SELECT 
+                    COUNT(*) AS \'No Vote\'
+                FROM
+                    v_verified_vote
+                WHERE
+                    v_hide_timings = \'No Vote\') AS c;
         ');
     }
 
@@ -102,8 +143,7 @@ class UpdateResultsView extends Migration
      */
     public function down()
     {
-        \Illuminate\Support\Facades\DB::statement('
-        DROP VIEW v_result;
-        ');
+        \Illuminate\Support\Facades\DB::statement('DROP VIEW IF EXISTS v_result;');
+        \Illuminate\Support\Facades\DB::statement('DROP VIEW IF EXISTS v_verified_vote;');
     }
 }

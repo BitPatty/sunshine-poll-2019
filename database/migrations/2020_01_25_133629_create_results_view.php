@@ -131,7 +131,7 @@ class CreateResultsView extends Migration
     public function down()
     {
         \Illuminate\Support\Facades\DB::statement('
-        DROP VIEW v_result;
+        DROP VIEW IF EXISTS v_result;
         ');
     }
 }
