@@ -86,5 +86,6 @@ return [
         'label' => 'English Version',
         'url' => 'https://q.zint.ch',
         'results_url' => 'https://q.zint.ch/results'
-    ]
+    ],
+    'total_votes' => '総計'
 ];

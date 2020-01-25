@@ -32,7 +32,7 @@
         google.charts.load("current", {packages: ["corechart"]});
         google.charts.setOnLoadCallback(drawChart);
 
-        function createChart(parent, id, data) {
+        function createChart(parent, id, data, total_votes) {
             const node = document.createElement('div');
             node.id = id;
             node.className = 'chart';
@@ -40,6 +40,7 @@
 
             const chart = new google.visualization.PieChart(document.getElementById(node.id));
             chart.draw(data, {
+                title: `{{trans('poll.total_votes')}} ${total_votes}`,
                 pieHole: 0.1,
                 fontName: "'Open Sans', Arial",
                 fontSize: 14,
@@ -54,6 +55,10 @@
                 {
                     label: '{{ trans('poll.sections.' . $vote['label'] . '.header') }}',
                     description: '{{ trans('poll.sections.' . $vote['label'] . '.description') }}',
+                    total: {
+                        ind: '{{ $vote['Yes'] + $vote['No'] + $vote['No Vote'] }}',
+                        abs: '{{ $vote['Yes'] + $vote['No']  }}',
+                    },
                     data: {
                         ind:
                             google.visualization.arrayToDataTable([
@@ -95,8 +100,8 @@
                 chartWrapper.className = 'chart__wrapper';
                 chartNode.appendChild(chartWrapper);
 
-                createChart(chartWrapper, nodes.abs, data[i].data.abs);
-                createChart(chartWrapper, nodes.ind, data[i].data.ind);
+                createChart(chartWrapper, nodes.abs, data[i].data.abs, data[i].total.abs);
+                createChart(chartWrapper, nodes.ind, data[i].data.ind, data[i].total.ind);
             }
         }
 
