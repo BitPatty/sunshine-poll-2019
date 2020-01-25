@@ -19,12 +19,35 @@
         }
 
         .chart__wrapper {
+            padding: 30px;
             display: block;
             text-align: center;
         }
 
         .chart {
             display: inline-block;
+            padding: 30px;
+            width: 30%;
+            min-width: 400px;
+            max-width: 100%;
+        }
+
+        @media screen and (max-width: 1000px) {
+            .chart__wrapper {
+                text-align: left;
+            }
+
+            .chart {
+                width: 100%;
+                max-width: 600px;
+                min-width: initial;
+            }
+        }
+
+        @media screen and (max-width: 700px) {
+            .chart {
+                max-width: 100%;
+            }
         }
     </style>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
@@ -32,24 +55,73 @@
         google.charts.load("current", {packages: ["corechart"]});
         google.charts.setOnLoadCallback(drawChart);
 
-        function createChart(parent, id, data, total_votes) {
-            const node = document.createElement('div');
-            node.id = id;
-            node.className = 'chart';
-            parent.appendChild(node);
+        function getWindowStep() {
+            return Math.floor(window.outerWidth / 100);
+        }
 
-            const chart = new google.visualization.PieChart(document.getElementById(node.id));
+        function debounce(func, wait, immediate) {
+            var timeout;
+            return function () {
+                var context = this, args = arguments;
+                var later = function () {
+                    timeout = null;
+                    if (!immediate) func.apply(context, args);
+                };
+                var callNow = immediate && !timeout;
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+                if (callNow) func.apply(context, args);
+            };
+        }
+
+        const REDRAW_THRESHOLD = 7;
+        var lastWindowWidth = getWindowStep();
+        const resizeHandler = debounce(() => {
+            const lastWidth = lastWindowWidth;
+            const currentWidth = getWindowStep();
+            lastWindowWidth = currentWidth;
+
+            if (currentWidth !== lastWidth) drawChart(true);
+        }, 100);
+
+        window.addEventListener('resize', resizeHandler);
+
+        function createChart(parent, id, data, total_votes) {
+            const chartNode = document.getElementById(id);
+
+            if (!chartNode) {
+                const node = document.createElement('div');
+                node.id = id;
+                node.className = 'chart';
+                parent.appendChild(node);
+            }
+
+            const chart = new google.visualization.PieChart(document.getElementById(id));
             chart.draw(data, {
                 title: `{{trans('poll.total_votes')}} ${total_votes}`,
-                pieHole: 0.1,
+                pieHole: lastWindowWidth <= REDRAW_THRESHOLD ? 0 : 0.3,
                 fontName: "'Open Sans', Arial",
                 fontSize: 14,
-                height: 250,
-                sliceVisibilityThreshold: 0
+                height: 'auto',
+                width: '100%',
+                sliceVisibilityThreshold: 0,
+                tooltip: lastWindowWidth > REDRAW_THRESHOLD ? {trigger: 'none'} : {trigger: 'focus'},
+                pieSliceText: lastWindowWidth <= REDRAW_THRESHOLD ? 'percentage' : 'none',
+                legend: {
+                    position: lastWindowWidth > REDRAW_THRESHOLD ? 'labeled' : 'bottom',
+                    labeledValueText: 'both',
+                    maxLines: 3,
+                },
+                chartArea: {
+                    left: '0%',
+                    right: '0%',
+                    height: '80%',
+                    width: '100%'
+                }
             });
         }
 
-        function drawChart() {
+        function drawChart(redraw = false) {
             const data = [
                     @foreach($votes as $vote)
                 {
@@ -84,24 +156,31 @@
                     abs: `chart_abs_${i}`
                 };
 
-                const chartNode = document.createElement('div');
-                document.getElementById('charts').appendChild(chartNode);
+                if (redraw) {
+                    const chartWrapper = document.getElementById(`chart_wrapper_${i}`);
+                    createChart(chartWrapper, nodes.abs, data[i].data.abs, data[i].total.abs);
+                    createChart(chartWrapper, nodes.ind, data[i].data.ind, data[i].total.ind);
+                } else {
+                    const chartNode = document.createElement('div');
+                    document.getElementById('charts').appendChild(chartNode);
 
-                const header = document.createElement('h3');
-                header.innerHTML = data[i].label;
-                header.className = 'title is-4'
-                chartNode.appendChild(header);
+                    const header = document.createElement('h3');
+                    header.innerHTML = data[i].label;
+                    header.className = 'title is-4'
+                    chartNode.appendChild(header);
 
-                const description = document.createElement('p');
-                description.innerHTML = data[i].description;
-                chartNode.appendChild(description);
+                    const description = document.createElement('p');
+                    description.innerHTML = data[i].description;
+                    chartNode.appendChild(description);
 
-                const chartWrapper = document.createElement('div');
-                chartWrapper.className = 'chart__wrapper';
-                chartNode.appendChild(chartWrapper);
+                    const chartWrapper = document.createElement('div');
+                    chartWrapper.id = `chart_wrapper_${i}`;
+                    chartWrapper.className = 'chart__wrapper';
+                    chartNode.appendChild(chartWrapper);
 
-                createChart(chartWrapper, nodes.abs, data[i].data.abs, data[i].total.abs);
-                createChart(chartWrapper, nodes.ind, data[i].data.ind, data[i].total.ind);
+                    createChart(chartWrapper, nodes.abs, data[i].data.abs, data[i].total.abs);
+                    createChart(chartWrapper, nodes.ind, data[i].data.ind, data[i].total.ind);
+                }
             }
         }
 
