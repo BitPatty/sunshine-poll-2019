@@ -87,5 +87,6 @@ return [
         'url' => 'https://q.zint.ch',
         'results_url' => 'https://q.zint.ch/results'
     ],
-    'total_votes' => '総計'
+    'total_votes_ind' => '@TODO:',
+    'total_votes_abs' => '@TODO:',
 ];
