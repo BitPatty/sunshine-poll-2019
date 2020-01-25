@@ -79,6 +79,7 @@ return [
         'header' => 'Verification State',
         'pending' => 'Pending',
         'verified' => 'Verified',
+        'rejected' => 'Rejected',
         'auto_verified' => 'Auto-Verified'
     ],
     'language_switch' => [
