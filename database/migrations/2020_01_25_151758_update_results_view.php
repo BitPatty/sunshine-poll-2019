@@ -1,0 +1,109 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+class UpdateResultsView extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        \Illuminate\Support\Facades\DB::statement('DROP VIEW v_result');
+
+        \Illuminate\Support\Facades\DB::statement('
+        CREATE VIEW v_result 
+        AS 
+          WITH votes 
+               AS (SELECT * 
+                   FROM   t_vote 
+                   WHERE  state = \'Verified\' 
+                           OR state = \'Auto-Verified\') SELECT 
+          \'timing_method_a\' AS \'label\', 
+                 a.*, 
+                 b.*, 
+                 c.* 
+          FROM   (SELECT Count(*) AS \'Yes\' 
+                  FROM   votes 
+                  WHERE  v_timing_method_a = \'Yes\') AS a, 
+                 (SELECT Count(*) AS \'No\' 
+                  FROM   votes 
+                  WHERE  v_timing_method_a = \'No\') AS b, 
+                 (SELECT Count(*) AS \'No Vote\' 
+                  FROM   votes 
+                  WHERE  v_timing_method_a = \'No Vote\') AS c 
+          UNION ALL 
+          SELECT \'timing_method_b\' AS \'label\', 
+                 a.*, 
+                 b.*, 
+                 c.* 
+          FROM   (SELECT Count(*) AS \'Yes\' 
+                  FROM   votes 
+                  WHERE  v_timing_method_b = \'Yes\') AS a, 
+                 (SELECT Count(*) AS \'No\' 
+                  FROM   votes 
+                  WHERE  v_timing_method_b = \'No\') AS b, 
+                 (SELECT Count(*) AS \'No Vote\' 
+                  FROM   votes 
+                  WHERE  v_timing_method_b = \'No Vote\') AS c 
+          UNION ALL 
+          SELECT \'timing_method_c\' AS \'label\', 
+                 a.*, 
+                 b.*, 
+                 c.* 
+          FROM   (SELECT Count(*) AS \'Yes\' 
+                  FROM   votes 
+                  WHERE  v_timing_method_c = \'Yes\') AS a, 
+                 (SELECT Count(*) AS \'No\' 
+                  FROM   votes 
+                  WHERE  v_timing_method_c = \'No\') AS b, 
+                 (SELECT Count(*) AS \'No Vote\' 
+                  FROM   votes 
+                  WHERE  v_timing_method_c = \'No Vote\') AS c 
+          UNION ALL 
+          SELECT \'timing_method_d\' AS \'label\', 
+                 a.*, 
+                 b.*, 
+                 c.* 
+          FROM   (SELECT Count(*) AS \'Yes\' 
+                  FROM   votes 
+                  WHERE  v_timing_method_d = \'Yes\') AS a, 
+                 (SELECT Count(*) AS \'No\' 
+                  FROM   votes 
+                  WHERE  v_timing_method_d = \'No\') AS b, 
+                 (SELECT Count(*) AS \'No Vote\' 
+                  FROM   votes 
+                  WHERE  v_timing_method_d = \'No Vote\') AS c 
+          UNION ALL 
+          SELECT \'hide_timings\' AS \'label\', 
+                 a.*, 
+                 b.*, 
+                 c.* 
+          FROM   (SELECT Count(*) AS \'Yes\' 
+                  FROM   votes 
+                  WHERE  v_hide_timings = \'Yes\') AS a, 
+                 (SELECT Count(*) AS \'No\' 
+                  FROM   votes 
+                  WHERE  v_hide_timings = \'No\') AS b, 
+                 (SELECT Count(*) AS \'No Vote\' 
+                  FROM   votes 
+                  WHERE  v_hide_timings = \'No Vote\') AS c; 
+        ');
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        \Illuminate\Support\Facades\DB::statement('
+        DROP VIEW v_result;
+        ');
+    }
+}
