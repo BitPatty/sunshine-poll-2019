@@ -44,6 +44,7 @@
                 fontName: "'Open Sans', Arial",
                 fontSize: 14,
                 height: 250,
+                sliceVisibilityThreshold: 0
             });
         }
 
