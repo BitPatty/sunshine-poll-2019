@@ -7,7 +7,11 @@
         <span>Currently logged in as {{\Illuminate\Support\Facades\Auth::user()->src_name}}</span>
         (<a href="{{ url('logout') }}" title="Logout">Logout</a>)
     </section>
-
+    @if(time() > env('VERIFICATION_CLOSE_DT'))
+        <div class="notification is-warning">
+            The verification process has timed out. Votes have been set to read-only and can no longer be verified or rejected.
+        </div>
+    @endif
     <section class="section">
         <table class="table is-striped is-fullwidth">
             <style>

@@ -21,12 +21,20 @@ class ResultsController extends Controller
 {
     public function __construct()
     {
-         $this->middleware('auth');
+        $results_publish_dt = env('RESULTS_PUBLISH_DT');
+
+        if ($results_publish_dt && !empty($results_publish_dt)) {
+            if (time() < $results_publish_dt) {
+                $this->middleware('auth');
+            }
+        } else {
+            $this->middleware('auth');
+        }
     }
 
     public function index()
     {
-         if (!Gate::allows('read-results')) abort(403);
+        if (!Gate::allows('read-results')) abort(403);
 
         $votes = Result::all();
 

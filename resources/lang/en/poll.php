@@ -87,5 +87,6 @@ return [
         'url' => 'https://jp.q.zint.ch',
         'results_url' => 'https://jp.q.zint.ch/results'
     ],
-    'total_votes' => 'Total:'
+    'total_votes_ind' => 'Total verified Votes:',
+    'total_votes_abs' => 'Weighed Votes (Yes/No only):',
 ];

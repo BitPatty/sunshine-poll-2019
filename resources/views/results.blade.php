@@ -86,7 +86,7 @@
 
         window.addEventListener('resize', resizeHandler);
 
-        function createChart(parent, id, data, total_votes) {
+        function createChart(parent, id, data, total_votes, title) {
             const chartNode = document.getElementById(id);
 
             if (!chartNode) {
@@ -98,7 +98,7 @@
 
             const chart = new google.visualization.PieChart(document.getElementById(id));
             chart.draw(data, {
-                title: `{{trans('poll.total_votes')}} ${total_votes}`,
+                title: `${title} ${total_votes}`,
                 pieHole: lastWindowWidth <= REDRAW_THRESHOLD ? 0 : 0.3,
                 fontName: "'Open Sans', Arial",
                 fontSize: 14,
@@ -115,7 +115,8 @@
                 chartArea: {
                     left: '0%',
                     right: '0%',
-                    height: '80%',
+                    top: '20%',
+                    height: '70%',
                     width: '100%'
                 }
             });
@@ -158,8 +159,8 @@
 
                 if (redraw) {
                     const chartWrapper = document.getElementById(`chart_wrapper_${i}`);
-                    createChart(chartWrapper, nodes.abs, data[i].data.abs, data[i].total.abs);
-                    createChart(chartWrapper, nodes.ind, data[i].data.ind, data[i].total.ind);
+                    createChart(chartWrapper, nodes.abs, data[i].data.abs, data[i].total.abs, '{{ trans('poll.total_votes_abs') }}');
+                    createChart(chartWrapper, nodes.ind, data[i].data.ind, data[i].total.ind, '{{ trans('poll.total_votes_ind') }}');
                 } else {
                     const chartNode = document.createElement('div');
                     document.getElementById('charts').appendChild(chartNode);
@@ -178,8 +179,8 @@
                     chartWrapper.className = 'chart__wrapper';
                     chartNode.appendChild(chartWrapper);
 
-                    createChart(chartWrapper, nodes.abs, data[i].data.abs, data[i].total.abs);
-                    createChart(chartWrapper, nodes.ind, data[i].data.ind, data[i].total.ind);
+                    createChart(chartWrapper, nodes.abs, data[i].data.abs, data[i].total.abs, '{{ trans('poll.total_votes_abs') }}');
+                    createChart(chartWrapper, nodes.ind, data[i].data.ind, data[i].total.ind, '{{ trans('poll.total_votes_ind') }}');
                 }
             }
         }
