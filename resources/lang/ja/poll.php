@@ -3,15 +3,15 @@
 return [
     'title' => 'スーパーマリオサンシャイン',
     'subtitle' => 'タイマー方式投票',
-    'closed' => 'The poll is closed.',
+    'closed' => '投票が閉まっています',
     'voting_system' => '<b>投票のしくみ</b>： タイマーの取り方がいくつか提示されているので、それを正式なやり方として認めるかどうかを投票していただきます。過半数の賛成が得られたものをhttp://Speedrun.com(以下SRC)で正式に採用します。その場合はAny%だけでなく、79枚や120枚など全ての(新規ファイルを用いる)カテゴリーで採用されることになります。',
-    'voting_requirement' => '',
+    'voting_requirement' => 'もうspeedrun.comのリーダーボードにRTAを投稿したなら、投票がすぐに検証します。それをやったことがないなら、人間は投票を見て検証します。',
     'preview_description' => '',
     'sections' => [
         'src_token' => [
             'header' => 'SRCのトークン',
             'description' => 'このサイトからトークンを見つけてそれを入力してください。 <a href="https://www.speedrun.com/api/auth" target="_blank" rel="noreferrer">https://www.speedrun.com/api/auth</a>',
-            'placeholder' => 'Your token...'
+            'placeholder' => 'トークン'
         ],
         'hide_timings' => [
             'header' => '方式の表示',
@@ -66,12 +66,24 @@ return [
             'description' => ''
         ],
         'custom_run' => [
-            'summary' => 'No runs found for your profile. You can submit a proof of you performing a run below, or submit again to skip this step. A previous SRL race or a video can be considered proof. If you feel you can prove you\'ve done a run through another medium, feel free to put it here. If you can not prove you’ve run the game, you can still vote, but it will not be weighed when the poll is finished. Your vote has not been updated yet!',
-            'header' => 'Run URL',
-            'placeholder' => 'Link to one of your runs..',
-            'description' => 'Provide a URL to one of your runs/SRL races or skip this step by clicking \'Submit\'.'
+            'summary' => 'speedrun.comのアカウントでRTAを見つからない。下でRTAのプルーフを投稿する。たとえば動画のURLとspeedrunsliveのURL。プルーフがないなら、君の投票を最後の投票に含みません。',
+            'header' => 'RTA URL',
+            'placeholder' => 'RTA URL',
+            'description' => 'speedrun.comとかspeedrunsliveレースとかのURLをここに出す。URLがなかったら、このページを飛ばして\'投稿する\'のボタンを押す'
         ]
     ],
-    'submit' => 'Submit',
-    'success' => 'Your vote has been registered. Changed your mind? Fill in <a href="/" title="Poll">the form</a> again to update your vote.'
+    'username' => 'ユーザ名',
+    'submit' => '投稿する',
+    'success' => '成功。気が変わったら、もう一度フォームに記入して、投票が変わる。',
+    'verification_state' => [
+        'header' => '検証状態',
+        'pending' => '検証済み',
+        'verified' => '保留中',
+        'rejected' => '却下',
+        'auto_verified' => '自動的に検証済み'
+    ],
+    'language_switch' => [
+        'label' => 'English Version',
+        'url' => 'https://q.zint.ch'
+    ]
 ];

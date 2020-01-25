@@ -72,6 +72,17 @@ return [
             'description' => 'Provide a URL to one of your runs/SRL races or skip this step by clicking \'Submit\'.'
         ]
     ],
+    'username' => 'Username',
     'submit' => 'Submit',
-    'success' => 'Your vote has been registered. Changed your mind? Fill in <a href="/" title="Poll">the form</a> again to update your vote.'
+    'success' => 'Your vote has been registered. Changed your mind? Fill in <a href="/" title="Poll">the form</a> again to update your vote.',
+    'verification_state' => [
+        'header' => 'Verification State',
+        'pending' => 'Pending',
+        'verified' => 'Verified',
+        'auto_verified' => 'Auto-Verified'
+    ],
+    'language_switch' => [
+        'label' => '日本語のバージョン',
+        'url' => 'https://jp.q.zint.ch'
+    ]
 ];

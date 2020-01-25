@@ -41,10 +41,10 @@ class PollController extends Controller
 
             if ($profile['status'] === 403) {
                 $request->flash();
-                return Redirect::back()->withErrors(['error' => 'Invalid speedrun.com token']);
+                return Redirect::back()->withErrors(['error' => 'error_messages.src_token.invalid']);
             } else if (!isset($profile['user'])) {
                 $request->flash();
-                return Redirect::back()->withErrors(['error' => 'Failed to retrieve your speedrun.com profile.']);
+                return Redirect::back()->withErrors(['error' => 'error_messages.src_token.failed_to_retrieve']);
             }
 
             $user = $profile['user'];
@@ -81,19 +81,20 @@ class PollController extends Controller
     }
 
     private static $validatorMessages = [
-        'src_token.required' => 'The speedrun.com token is required',
-        'src_token.min' => 'Invalid speedrun.com token',
-        'src_token.max' => 'Invalid speedrun.com token',
-        'v_hide_timings.in' => 'Invalid Option for "Hide Timings"',
-        'v_timing_method_a.required' => 'An option for "Timing Method A" is required',
-        'v_timing_method_a.in' => 'Invalid Option for "Timing Method A"',
-        'v_timing_method_b.required' => 'An option for "Timing Method B" is required',
-        'v_timing_method_b.in' => 'Invalid Option for "Timing Method B"',
-        'v_timing_method_c.required' => 'An option for "Timing Method C" is required',
-        'v_timing_method_c.in' => 'Invalid Option for "Timing Method C"',
-        'v_timing_method_d.required' => 'An option for "Timing Method D" is required',
-        'v_timing_method_d.in' => 'Invalid Option for "Timing Method D"',
-        'comment.max' => 'The comment may not exceed 1000 characters',
+        'src_token.required' => 'error_messages.src_token.required',
+        'src_token.min' => 'error_messages.src_token.invalid',
+        'src_token.max' => 'error_messages.src_token.invalid',
+        'v_hide_timings.required' => 'error_messages.v_hide_timings.required',
+        'v_hide_timings.in' => 'error_messages.v_hide_timings.in',
+        'v_timing_method_a.required' => 'error_messages.v_timing_method_a.required',
+        'v_timing_method_a.in' => 'error_messages.v_timing_method_a.in',
+        'v_timing_method_b.required' => 'error_messages.v_timing_method_b.required',
+        'v_timing_method_b.in' => 'error_messages.v_timing_method_b.in',
+        'v_timing_method_c.required' => 'error_messages.v_timing_method_c.required',
+        'v_timing_method_c.in' => 'error_messages.v_timing_method_c.in',
+        'v_timing_method_d.required' => 'error_messages.v_timing_method_d.required',
+        'v_timing_method_d.in' => 'error_messages.v_timing_method_d.in',
+        'comment.max' => 'error_messages.comment.max',
     ];
 
     private function createSubmissionValidator($data)

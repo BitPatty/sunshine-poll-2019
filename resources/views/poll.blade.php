@@ -4,13 +4,15 @@
     <section class="section has-text-centered">
         <h1 class="title is-h1">{{ trans('poll.title') }}</h1>
         <h2 class="subtitle">{{ trans('poll.subtitle') }}</h2>
+        <a title="Language Switch"
+           href="{{ trans('poll.language_switch.url') }}">{{ trans('poll.language_switch.label') }}</a>
     </section>
     <section class="section">
         @if($errors->any())
             <div class="notification is-danger">
                 <ul>
                     @foreach($errors->all() as $error)
-                        <li>{{ $error }}</li>
+                        <li>{{ \Illuminate\Support\Facades\Lang::has($error) ? trans($error) : trans('error_messages.fallback') }}</li>
                     @endforeach
                 </ul>
             </div>
