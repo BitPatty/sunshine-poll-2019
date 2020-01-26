@@ -2,32 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Flag;
+use App\Models\Flags;
 use App\Models\Result;
-use App\Models\Run;
-use App\Models\User;
-use App\Models\VerificationHistory;
-use App\Models\VerificationState;
-use App\Models\Vote;
-use App\Models\VoteHistory;
-use App\Providers\RouteServiceProvider;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Facades\Validator;
 
 class ResultsController extends Controller
 {
     public function __construct()
     {
-        $results_publish_dt = env('RESULTS_PUBLISH_DT');
-
-        if ($results_publish_dt && !empty($results_publish_dt)) {
-            if (time() < $results_publish_dt) {
+        try {
+            if (Flag::getByKey(Flags::IS_RESULT_PUBLIC)->value !== true) {
                 $this->middleware('auth');
             }
-        } else {
+        } catch (\Exception $ex) {
             $this->middleware('auth');
         }
     }

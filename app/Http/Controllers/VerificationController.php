@@ -2,17 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Run;
-use App\Models\User;
 use App\Models\VerificationHistory;
 use App\Models\VerificationState;
 use App\Models\Vote;
 use App\Models\VoteHistory;
-use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
 
 class VerificationController extends Controller
@@ -25,19 +20,19 @@ class VerificationController extends Controller
     public function index()
     {
         if (!Gate::allows('read-votes')) abort(403);
-        
-        $votes = Vote::all();
+
+        $votes = Vote::orderBy('state', 'ASC')->orderBy('updated_at', 'DESC')->get();
         return view('verification_panel', ['votes' => $votes]);
     }
 
     public function show(Request $request, $id)
     {
         if (!Gate::allows('read-votes')) abort(403);
-        
+
         $vote = Vote::find($id);
         $vote_history = VoteHistory::where(['vote_id' => $vote->id])->get();
         $verification_history = VerificationHistory::where(['vote_id' => $vote->id])->get();
-        return view('vote_verification', ['vote' => $vote, 'vote_history' => $vote_history, 'verification_history' => $verification_history, 'privileged' => Gate::allows('update-votes')]);
+        return view('vote_verification', ['vote' => $vote, 'vote_history' => $vote_history, 'verification_history' => $verification_history, 'privileged' => Gate::allows('update-votes'), 'showVerificationHistory' => Gate::allows('read-verification-history')]);
     }
 
     public function update(Request $request, $id)
@@ -55,6 +50,6 @@ class VerificationController extends Controller
         $vote->save();
 
         VerificationHistory::addEntry($vote, $request->user());
-        return $this->show($request, $id);
+        return back();
     }
 }

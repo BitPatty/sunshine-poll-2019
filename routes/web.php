@@ -11,6 +11,8 @@ Route::group(['middleware' => ['activity']], function () {
 
     Route::get('/results', 'ResultsController@index');
 
+    Route::get('/manage', 'PollManagementController@index');
+    Route::post('/manage', 'PollManagementController@update');
     Route::get('/verification', 'VerificationController@index');
     Route::get('/verification/{id}', 'VerificationController@show');
     Route::post('/verification/{id}', 'VerificationController@update');

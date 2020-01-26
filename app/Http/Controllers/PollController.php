@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Flag;
+use App\Models\Flags;
 use App\Models\User;
+use App\Models\VerificationHistory;
 use App\Models\VerificationState;
 use App\Models\Vote;
 use App\Models\VoteHistory;
@@ -19,13 +22,15 @@ class PollController extends Controller
 
     public function index()
     {
-        if (time() > env('POLL_CLOSE_DT')) return view('poll_closed');
+        if (Flag::getByKey(Flags::IS_POLL_CLOSED)->value === true || Flag::getByKey(Flags::IS_POLL_OPENED)->value === false) return view('poll_closed');
+
         return view('poll');
     }
 
     public function submit(Request $request)
     {
-        if (time() > env('POLL_CLOSE_DT')) return view('poll_closed');
+        if (Flag::getByKey(Flags::IS_POLL_CLOSED)->value === true || Flag::getByKey(Flags::IS_POLL_OPENED)->value === false) return view('poll_closed');
+
         $validator = $this->createSubmissionValidator($request->post());
 
         if ($validator->fails()) {
@@ -77,6 +82,8 @@ class PollController extends Controller
         $vote->save();
         $vote = Vote::where(['user_id' => $user->id])->first();
         VoteHistory::addEntry($vote);
+        VerificationHistory::addEntry($vote, User::getServiceAccount());
+
         return view('success', ['vote' => $vote]);
     }
 

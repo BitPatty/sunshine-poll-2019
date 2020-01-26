@@ -45,9 +45,9 @@
     </section>
     <section class="section">
         <h3 class="title is-3">Verification History</h3>
-        @if($privileged)
+        @if($showVerificationHistory)
             @if(count($verification_history) === 0)
-                <em>No mod verification registered.</em>
+                <em>No verification registered.</em>
             @else
                 <table class="table is-striped is-fullwidth">
                     <thead>
@@ -125,10 +125,6 @@
 @endsection
 @section('scripts')
     <script>
-        function collapse($t) {
-
-        }
-
         c = document.getElementsByClassName('collapse');
 
         for (let i = 0; i < c.length; i++) {

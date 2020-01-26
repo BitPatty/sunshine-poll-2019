@@ -4,14 +4,13 @@ namespace App\Models;
 
 use GuzzleHttp\Client;
 use Illuminate\Auth\Authenticatable;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Auth\Passwords\CanResetPassword;
-use Illuminate\Foundation\Auth\Access\Authorizable;
-use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
+use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\Access\Authorizable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Support\Facades\Crypt;
 
 class User extends Model implements AuthenticatableContract,
     AuthorizableContract,
@@ -19,7 +18,8 @@ class User extends Model implements AuthenticatableContract,
 {
     use Notifiable, Authenticatable, Authorizable, CanResetPassword;
 
-    public function runs() {
+    public function runs()
+    {
         return $this->hasMany(Run::class, 'user_id', 'id');
     }
 
@@ -55,6 +55,11 @@ class User extends Model implements AuthenticatableContract,
         }
 
         return $src_data;
+    }
+
+    public static function getServiceAccount()
+    {
+        return User::where(['src_name' => 'Service Account'])->first();
     }
 
     public static function hasRuns(User $user)
