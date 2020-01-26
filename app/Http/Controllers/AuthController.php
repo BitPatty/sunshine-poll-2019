@@ -3,10 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use App\Models\VerificationState;
-use App\Models\Vote;
-use App\Models\VoteHistory;
-use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
@@ -56,7 +52,7 @@ class AuthController extends Controller
             return Redirect::back()->withErrors(['error' => 'Missing authorization']);
         }
 
-        return redirect('/verification');
+        return redirect()->intended('/verification');
     }
 
     public function logout()
