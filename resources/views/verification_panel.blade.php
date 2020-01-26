@@ -23,6 +23,7 @@
     <section class="section">
         <div class="buttons has-text-right is-block">
             <a href="/manage" class="button is-primary is-inline-block">Manage Poll</a>
+            <a href="/results" class="button is-info is-inline-block">Results</a>
         </div>
         <table class="table is-striped is-fullwidth">
             <style>
