@@ -19,7 +19,7 @@ return [
             'options' => [
                 'yes' => 'はい（非表示にすべき）',
                 'no' => 'いいえ',
-                'no_vote' => 'どちらでもいい'
+                'no_vote' => '無投票'
             ]
         ],
         'timing_method_a' => [
@@ -29,7 +29,7 @@ return [
             'options' => [
                 'yes' => '賛成',
                 'no' => '反対',
-                'no_vote' => 'どちらでもいい'
+                'no_vote' => '無投票'
             ]
         ],
         'timing_method_b' => [
@@ -39,7 +39,7 @@ return [
             'options' => [
                 'yes' => '賛成',
                 'no' => '反対',
-                'no_vote' => 'どちらでもいい'
+                'no_vote' => '無投票'
             ]
         ],
         'timing_method_c' => [
@@ -49,7 +49,7 @@ return [
             'options' => [
                 'yes' => '賛成',
                 'no' => '反対',
-                'no_vote' => 'どちらでもいい'
+                'no_vote' => '無投票'
             ]
         ],
         'timing_method_d' => [
@@ -58,7 +58,7 @@ return [
             'options' => [
                 'yes' => '賛成',
                 'no' => '反対',
-                'no_vote' => 'どちらでもいい'
+                'no_vote' => '無投票'
             ]
         ],
         'comment' => [
