@@ -18,7 +18,14 @@ class DatabaseSeeder extends Seeder
         foreach ($users as $user) {
             factory(\App\Models\Vote::class)->create([
                 'user_id' => $user->id,
+                'comment' => '(Seeded Vote)',
             ]);
+        }
+
+        $votes = \App\Models\Vote::all();
+        foreach ($votes as $vote) {
+            \App\Models\VoteHistory::addEntry($vote);
+            \App\Models\VerificationHistory::addEntry($vote, \App\Models\User::getServiceAccount());
         }
     }
 }
