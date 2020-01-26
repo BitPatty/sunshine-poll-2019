@@ -80,7 +80,7 @@
                     <div class="state_description">
                         <p><strong>Open the poll</strong></p>
                         <p>
-                            <small>Open the poll and enables voting.</small>
+                            <small>Open the poll and enable voting.</small>
                         </p>
                     </div>
                 </li>
@@ -122,7 +122,7 @@
                     <div class="state_description">
                         <p><strong>Close Poll</strong></p>
                         <p>
-                            <small>Close the poll and disable the voting.</small>
+                            <small>Close the poll and disable voting.</small>
                         </p>
                         <p>
                             <small class="has-text-warning"><em>Requires the poll to be opened</em></small>
@@ -186,7 +186,7 @@
                     <div class="state_description">
                         <p><strong>Published Results</strong></p>
                         <p>
-                            <small>Results are publicly available at <a href="/results">/results</a>.</small>
+                            <small>Results are publicly visible at <a href="/results">/results</a>.</small>
                         </p>
                         <p>
                             <small>{{ $state[\App\Models\Flags::IS_RESULT_PUBLIC]->updated_at }}
@@ -202,7 +202,7 @@
                     <div class="state_description">
                         <p><strong>Publish Results</strong></p>
                         <p>
-                            <small>Makes the results page publicly available.</small>
+                            <small>Makes the results page publicly visible.</small>
                         </p>
                     </div>
                 </li>
