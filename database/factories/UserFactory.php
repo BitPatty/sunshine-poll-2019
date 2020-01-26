@@ -4,12 +4,12 @@
 
 use App\User;
 use Faker\Generator as Faker;
-use Illuminate\Support\Str;
 
 
 $factory->define(\App\Models\User::class, function (Faker $faker) {
+    $uname = $faker->unique()->userName;
     return [
-        'src_name' => $faker->userName,
-        'src_id' => $faker->numberBetween(0, 100000),
+        'src_name' => $uname,
+        'src_id' => $uname
     ];
 });
