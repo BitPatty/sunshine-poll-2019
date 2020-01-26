@@ -9,7 +9,7 @@
     </section>
     <div class="notification is-info">
         <ul>
-            The database will reset in <?php echo (60-(date("i",time()))." minutes"); ?>.
+            The database will be reset in <?php echo (60-(date("i",time()))." minutes"); ?>.
         </ul>
     </div>
     @if(\App\Models\Flag::getByKey(\App\Models\Flags::IS_VERIFICATION_CLOSED)->value === true)
