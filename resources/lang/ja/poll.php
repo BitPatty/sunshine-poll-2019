@@ -87,6 +87,6 @@ return [
         'url' => 'https://q.zint.ch',
         'results_url' => 'https://q.zint.ch/results'
     ],
-    'total_votes_ind' => '@TODO:',
-    'total_votes_abs' => '@TODO:',
+    'total_votes_ind' => '総投票数:',
+    'total_votes_abs' => '加重投票数(賛成/反対のみ):',
 ];
