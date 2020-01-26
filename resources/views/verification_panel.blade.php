@@ -7,11 +7,13 @@
         <span>Currently logged in as {{\Illuminate\Support\Facades\Auth::user()->src_name}}</span>
         (<a href="{{ url('logout') }}" title="Logout">Logout</a>)
     </section>
-    <div class="notification is-info">
-        <ul>
-            The poll/database will be reset in <?php echo (60-(date("i",time()))." minutes"); ?>.
-        </ul>
-    </div>
+    @if(env('INTEGRATION_WARNINGS') === 'on')
+        <div class="notification is-info">
+            <ul>
+                The poll/database will be reset and reseeded in <?php echo(60 - (date("i", time())) . " minutes"); ?>.
+            </ul>
+        </div>
+    @endif
     @if(\App\Models\Flag::getByKey(\App\Models\Flags::IS_VERIFICATION_CLOSED)->value === true)
         <div class="notification is-warning">
             The verification process has been closed. Votes have been set to read-only and can no longer be verified or

@@ -17,12 +17,14 @@
                 </ul>
             </div>
         @else
-            <div class="notification is-warning">
-                This poll is not live yet! Votes will be reset!
+            @if(env('INTEGRATION_WARNINGS') === 'on')
+                <div class="notification is-warning">
+                    This poll is not live yet! Votes will be reset!
+                </div>
+            @endif
+            <div class="notification is-primary">
+                <p>{!! trans('poll.poll_close_time') !!}.</p>
             </div>
-        <div class="notification is-primary">
-            <p>{!! trans('poll.poll_close_time') !!}.</p>
-        </div>
             <p>{!! trans('poll.voting_system') !!}</p>
             <br>
             <p>{!! trans('poll.voting_requirement') !!}</p>
