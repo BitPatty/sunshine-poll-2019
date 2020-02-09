@@ -90,4 +90,6 @@ return [
     ],
     'total_votes_ind' => 'Total verified Votes:',
     'total_votes_abs' => 'Weighed Votes (Yes/No only):',
+    'votes_by_pb' => 'Votes by PB (Any% Leaderboard runs)',
+    'votes_by_yr' => 'Votes by latest PB date (Leaderboard runs only)'
 ];

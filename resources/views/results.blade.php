@@ -43,7 +43,6 @@
         .chart.single {
             display: inline-block;
             width: calc(60% + 60px);
-           /* height: 500px; */
         }
 
         @media screen and (max-width: 1000px) {
@@ -57,7 +56,6 @@
                 min-width: initial;
                 height: auto;
                 padding: 30px 0px;
-
             }
 
             .chart.single {
@@ -156,7 +154,7 @@
             });
         }
 
-        function createStatsChart(parent, id, data, title) {
+        function createStatsChart(parent, id, data, title, relative = false) {
             const chartNode = document.getElementById(id);
 
             if (!chartNode) {
@@ -169,14 +167,11 @@
             const chart = new google.visualization.SteppedAreaChart(document.getElementById(id));
 
             const options = {
-                //isStacked: 'relative',
                 title: title,
                 vAxis: {title: 'Accumulated Votes', titleTextStyle: {italic: false}},
-                // legend: {position: 'bottom'},
                 fontName: 'Open Sans',
                 connectSteps: false,
-                //colors: ['#4374E0', '#53A8FB', '#F1CA3A', '#E49307'],
-                isStacked: true,
+                isStacked: relative ? 'percent' : true,
                 areaOpacity: 0.5,
                 height: '200',
                 width: '100%',
@@ -256,8 +251,8 @@
 
                     const statsWrapper = document.getElementById(`stats_wrapper_${i}`);
 
-                    createStatsChart(statsWrapper, nodes.aggr_pb, data[i].data.aggr_pb, 'Votes by PB (Any4 Leaderboard runs only)');
-                    createStatsChart(statsWrapper, nodes.aggr_yr, data[i].data.aggr_yr, 'Votes by latest PB date (Leaderboard runs only)');
+                    createStatsChart(statsWrapper, nodes.aggr_pb, data[i].data.aggr_pb, '{{ trans('poll.votes_by_pb') }}');
+                    createStatsChart(statsWrapper, nodes.aggr_yr, data[i].data.aggr_yr, '{{ trans('poll.votes_by_yr') }}');
                 } else {
                     const chartNode = document.createElement('div');
                     document.getElementById('charts').appendChild(chartNode);
@@ -284,8 +279,8 @@
                     statsWrapper.className = 'chart__wrapper';
                     chartNode.appendChild(statsWrapper);
 
-                    createStatsChart(statsWrapper, nodes.aggr_pb, data[i].data.aggr_pb, 'Votes by PB (Any% Leaderboard runs)');
-                    createStatsChart(statsWrapper, nodes.aggr_yr, data[i].data.aggr_yr, 'Votes by latest PB date (Leaderboard runs only)');
+                    createStatsChart(statsWrapper, nodes.aggr_pb, data[i].data.aggr_pb, '{{ trans('poll.votes_by_pb') }}');
+                    createStatsChart(statsWrapper, nodes.aggr_yr, data[i].data.aggr_yr, '{{ trans('poll.votes_by_yr') }}');
                 }
             }
         }

@@ -90,4 +90,6 @@ return [
     ],
     'total_votes_ind' => '総投票数:',
     'total_votes_abs' => '加重投票数(賛成/反対のみ):',
+    'votes_by_pb' => 'Votes by PB (Any% Leaderboard runs)',
+    'votes_by_yr' => 'Votes by latest PB date (Leaderboard runs only)'
 ];

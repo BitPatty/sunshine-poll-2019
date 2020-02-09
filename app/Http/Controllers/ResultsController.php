@@ -30,11 +30,9 @@ class ResultsController extends Controller
 
         $aggregated_votes = [
             'pb' => Aggr_Vote_Pb::orderBy('pb', 'DESC')->get()->toArray(),
-            'yr' => Aggr_Vote_Yr::orderBy('year', 'DESC')->get()->toArray(),
+            'yr' => Aggr_Vote_Yr::orderBy('year', 'ASC')->get()->toArray(),
         ];
 
-
-      // return response()->json($aggregated_votes);
 
         return view('results', ['votes' => $votes, 'aggregated_votes' => $aggregated_votes]);
     }
