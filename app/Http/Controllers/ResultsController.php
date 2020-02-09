@@ -26,7 +26,7 @@ class ResultsController extends Controller
     {
         if (!Gate::allows('read-results')) abort(403);
 
-        $votes = Result::all();
+        $votes = Result::orderBy('label', 'ASC')->get();
 
         $aggregated_votes = [
             'pb' => Aggr_Vote_Pb::orderBy('pb', 'DESC')->get()->toArray(),
