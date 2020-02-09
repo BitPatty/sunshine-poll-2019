@@ -24,7 +24,7 @@ class ResultsController extends Controller
     {
         if (!Gate::allows('read-results')) abort(403);
 
-        $votes = Result::all();
+        $votes = Result::orderBy('label', 'ASC')->get();
 
         return view('results', ['votes' => $votes]);
     }
