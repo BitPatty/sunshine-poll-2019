@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Aggr_Vote_Pb;
+use App\Models\Aggr_Vote_Yr;
 use App\Models\Flag;
 use App\Models\Flags;
 use App\Models\Result;
@@ -26,6 +28,14 @@ class ResultsController extends Controller
 
         $votes = Result::all();
 
-        return view('results', ['votes' => $votes]);
+        $aggregated_votes = [
+            'pb' => Aggr_Vote_Pb::orderBy('pb', 'DESC')->get()->toArray(),
+            'yr' => Aggr_Vote_Yr::orderBy('year', 'DESC')->get()->toArray(),
+        ];
+
+
+      // return response()->json($aggregated_votes);
+
+        return view('results', ['votes' => $votes, 'aggregated_votes' => $aggregated_votes]);
     }
 }

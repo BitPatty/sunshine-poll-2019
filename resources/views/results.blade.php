@@ -14,6 +14,14 @@
 @endsection
 @section('scripts')
     <style>
+        @if(env('APP_ENV') === 'local')
+
+        * {
+            border: 1px solid #f00 !important;
+        }
+
+        @endif
+
         .chart_collection > div {
             display: block;
         }
@@ -32,6 +40,12 @@
             max-width: 100%;
         }
 
+        .chart.single {
+            display: inline-block;
+            width: calc(60% + 60px);
+           /* height: 500px; */
+        }
+
         @media screen and (max-width: 1000px) {
             .chart__wrapper {
                 text-align: left;
@@ -41,19 +55,37 @@
                 width: 100%;
                 max-width: 600px;
                 min-width: initial;
+                height: auto;
+                padding: 30px 0px;
+
+            }
+
+            .chart.single {
+                width: 100%;
             }
         }
 
         @media screen and (max-width: 700px) {
+
+            .section {
+                padding-left: 0px;
+                padding-right: 0px;
+            }
+
+            .chart__wrapper {
+                padding: 0px;
+            }
+
             .chart {
                 max-width: 100%;
+                height: auto;
             }
         }
     </style>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
         google.charts.load("current", {packages: ["corechart"]});
-        google.charts.setOnLoadCallback(drawChart);
+        google.charts.setOnLoadCallback(drawCharts);
 
         function getWindowStep() {
             return Math.floor(window.outerWidth / 100);
@@ -81,7 +113,7 @@
             const currentWidth = getWindowStep();
             lastWindowWidth = currentWidth;
 
-            if (currentWidth !== lastWidth) drawChart(true);
+            if (currentWidth !== lastWidth) drawCharts(true);
         }, 100);
 
         window.addEventListener('resize', resizeHandler);
@@ -112,6 +144,47 @@
                     labeledValueText: 'both',
                     maxLines: 3,
                 },
+                areaOpacity: 0.5,
+
+                chartArea: {
+                    left: '0%',
+                    right: '0%',
+                    top: '20%',
+                    height: '75%',
+                    width: '100%'
+                }
+            });
+        }
+
+        function createStatsChart(parent, id, data, title) {
+            const chartNode = document.getElementById(id);
+
+            if (!chartNode) {
+                const node = document.createElement('div');
+                node.id = id;
+                node.className = 'chart single';
+                parent.appendChild(node);
+            }
+
+            const chart = new google.visualization.SteppedAreaChart(document.getElementById(id));
+
+            const options = {
+                //isStacked: 'relative',
+                title: title,
+                vAxis: {title: 'Accumulated Votes', titleTextStyle: {italic: false}},
+                // legend: {position: 'bottom'},
+                fontName: 'Open Sans',
+                connectSteps: false,
+                //colors: ['#4374E0', '#53A8FB', '#F1CA3A', '#E49307'],
+                isStacked: true,
+                areaOpacity: 0.5,
+                height: '200',
+                width: '100%',
+                legend: {
+                    position: lastWindowWidth > REDRAW_THRESHOLD ? 'labeled' : 'bottom',
+                    labeledValueText: 'both',
+                    maxLines: 3,
+                },
                 chartArea: {
                     left: '0%',
                     right: '0%',
@@ -119,10 +192,12 @@
                     height: '70%',
                     width: '100%'
                 }
-            });
+            };
+
+            chart.draw(data, options);
         }
 
-        function drawChart(redraw = false) {
+        function drawCharts(redraw = false) {
             const data = [
                     @foreach($votes as $vote)
                 {
@@ -146,6 +221,20 @@
                                 ['{{ trans('poll.sections.' . $vote['label'] . '.options.yes') }}', {{ $vote['Yes'] }}],
                                 ['{{ trans('poll.sections.' . $vote['label'] . '.options.no') }}', {{ $vote['No'] }}],
                             ]),
+                        aggr_pb:
+                            google.visualization.arrayToDataTable([
+                                ['PB', 'Yes', 'No', 'No Vote'],
+                                    @foreach($aggregated_votes['pb'] as $aggr_vote)
+                                ['< {{ $aggr_vote['pb'] }}', {{ $aggr_vote[$vote['label']. '.options.yes'] }}, {{ $aggr_vote[$vote['label']. '.options.no'] }}, {{ $aggr_vote[$vote['label']. '.options.no_vote'] }} ],
+                                @endforeach
+                            ]),
+                        aggr_yr:
+                            google.visualization.arrayToDataTable([
+                                ['PB', 'Yes', 'No', 'No Vote'],
+                                    @foreach($aggregated_votes['yr'] as $aggr_vote)
+                                ['{{ $aggr_vote['year'] }}', {{ $aggr_vote[$vote['label']. '.options.yes'] }}, {{ $aggr_vote[$vote['label']. '.options.no'] }}, {{ $aggr_vote[$vote['label']. '.options.no_vote'] }} ],
+                                @endforeach
+                            ]),
                     }
                 },
                 @endforeach
@@ -154,13 +243,21 @@
             for (let i = 0; i < data.length; i++) {
                 const nodes = {
                     ind: `chart_ind_${i}`,
-                    abs: `chart_abs_${i}`
+                    abs: `chart_abs_${i}`,
+                    aggr_pb: `chart_aggr_pb_${i}`,
+                    aggr_yr: `chart_aggr_yr_${i}`,
                 };
 
                 if (redraw) {
                     const chartWrapper = document.getElementById(`chart_wrapper_${i}`);
+
                     createChart(chartWrapper, nodes.abs, data[i].data.abs, data[i].total.abs, '{{ trans('poll.total_votes_abs') }}');
                     createChart(chartWrapper, nodes.ind, data[i].data.ind, data[i].total.ind, '{{ trans('poll.total_votes_ind') }}');
+
+                    const statsWrapper = document.getElementById(`stats_wrapper_${i}`);
+
+                    createStatsChart(statsWrapper, nodes.aggr_pb, data[i].data.aggr_pb, 'Votes by PB (Any4 Leaderboard runs only)');
+                    createStatsChart(statsWrapper, nodes.aggr_yr, data[i].data.aggr_yr, 'Votes by latest PB date (Leaderboard runs only)');
                 } else {
                     const chartNode = document.createElement('div');
                     document.getElementById('charts').appendChild(chartNode);
@@ -181,6 +278,14 @@
 
                     createChart(chartWrapper, nodes.abs, data[i].data.abs, data[i].total.abs, '{{ trans('poll.total_votes_abs') }}');
                     createChart(chartWrapper, nodes.ind, data[i].data.ind, data[i].total.ind, '{{ trans('poll.total_votes_ind') }}');
+
+                    const statsWrapper = document.createElement('div');
+                    statsWrapper.id = `stats_wrapper_${i}`;
+                    statsWrapper.className = 'chart__wrapper';
+                    chartNode.appendChild(statsWrapper);
+
+                    createStatsChart(statsWrapper, nodes.aggr_pb, data[i].data.aggr_pb, 'Votes by PB (Any% Leaderboard runs)');
+                    createStatsChart(statsWrapper, nodes.aggr_yr, data[i].data.aggr_yr, 'Votes by latest PB date (Leaderboard runs only)');
                 }
             }
         }
